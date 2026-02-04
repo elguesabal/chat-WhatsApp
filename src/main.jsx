@@ -1,11 +1,20 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./style/index.css";
 import Chat from "./Chat.jsx";
 
 createRoot(document.getElementById("root")).render(
 	// <StrictMode>
-		<Chat />
+		// <Chat />
+	// </StrictMode>
+
+	// <StrictMode>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/:idPhone/:phone" element={<Chat />} />
+			</Routes>
+		</BrowserRouter>
 	// </StrictMode>
 );
