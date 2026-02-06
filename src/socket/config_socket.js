@@ -10,7 +10,8 @@ import { io } from "socket.io-client";
 export default function createSocket(idPhone, phone) {
 	// return (io("http://localhost:3000", {
 	// return (io("http://192.168.137.1:3000", {
-	return (io("https://gung-twineable-cole.ngrok-free.dev", {
+	// return (io("https://gung-twineable-cole.ngrok-free.dev", {
+	return (io("https://bot-whatsapp-w8i2.onrender.com", {
 		autoConnect: false,
 		transports: ["websocket"],
 		auth: {
