@@ -5,7 +5,7 @@
 */
 export default function Header({ phone }) {
 	return (
-		<div className="flex items-center justify-center h-14 bg-gray-900">
+		<div className="flex items-center justify-center h-14 bg-gray-900 shrink-0">
 			<span className="text-white">{phone}</span>
 		</div>
 	);

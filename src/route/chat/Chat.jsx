@@ -27,9 +27,10 @@ export default function Chat() {
 
 	// if (messages === null) return (<Load />);
 	return (
-		<div className="h-screen flex flex-col bg-black">
+		<div className="h-dvh flex flex-col bg-black overflow-hidden">
 			<Header phone={phone} />
 			<Messages socket={socket} />
+			<Footer />
 		</div>
 	);
 }
