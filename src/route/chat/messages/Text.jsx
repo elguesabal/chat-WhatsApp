@@ -1,3 +1,5 @@
+import Visualization from "./visualization.jsx";
+
 /**
  * @author VAMPETA
  * @brief RENDERIZA MENSAGEM DE TEXTO
@@ -7,8 +9,9 @@ export default function Text({ message }) {
 	return (
 		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
 			{formattedText(message.data.text.body)}
-			<div className="flex justify-end mt-1">
-				<span className=" text-gray-700">{formatTimeBR(message.timestamp)}</span>
+			<div className="flex items-center justify-end mt-1">
+				<span className="text-xs text-gray-700">{formatDate(message.timestamp)}</span>
+				{message.status && <Visualization status={message.status} />}
 			</div>
 		</div>
 	);
@@ -71,13 +74,18 @@ function formattedText(text) {
 
 /**
  * @author VAMPETA
- * @brief CONVERTE A DATA TIMESTAMP PARA HORA E MINUTO
- * @param {String} text TEXTO A SER ANALIZADO
+ * @brief CONVERTE A DATA TIMESTAMP PARA STRING NO FORMATO "dd/mm/aaaa hh:mm"
+ * @param {String} timestamp DATA A SER CONVERTIDA
+ * @return {String} DATA E HORA FORMATADA
 */
-function formatTimeBR(timestamp) {
-	return ((new Date(timestamp)).toLocaleTimeString("pt-BR", {
+function formatDate(timestamp) {
+	return new Date(timestamp).toLocaleString("pt-BR", {
 		timeZone: "America/Sao_Paulo",
+		day: "2-digit",
+		month: "2-digit",
+		year: "numeric",
 		hour: "2-digit",
-		minute: "2-digit"
-	}));
+		minute: "2-digit",
+		hour12: false
+	});
 }
