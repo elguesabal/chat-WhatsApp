@@ -1,3 +1,5 @@
+import FooterMessage from "./FooterMessage.jsx";
+
 /**
  * @author VAMPETA
  * @brief RENDERIZA MENSAGEM DE LOCALIZACAO
@@ -11,6 +13,7 @@ export default function Location({ message }) {
                   </div>
                   <p>{message.data.location.name}</p>
                   <p className="text-sm">{message.data.location.address}</p>
+                  <FooterMessage message={message} />
             </a>
       );
 }

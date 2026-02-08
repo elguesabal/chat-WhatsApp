@@ -1,21 +1,4 @@
-import Visualization from "./visualization.jsx";
-
-/**
- * @author VAMPETA
- * @brief RENDERIZA MENSAGEM DE TEXTO
- * @param {Object} message MENSAGEM A SER RENDERIZADA
-*/
-export default function Text({ message }) {
-	return (
-		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
-			{formattedText(message.data.text.body)}
-			<div className="flex items-center justify-end mt-1">
-				<span className="text-xs text-gray-700">{formatDate(message.timestamp)}</span>
-				{message.status && <Visualization status={message.status} />}
-			</div>
-		</div>
-	);
-}
+import FooterMessage from "./FooterMessage.jsx";
 
 /**
  * @author VAMPETA
@@ -39,7 +22,7 @@ function formattedText(text) {
 				newParts.push(part);
 				return;
 			}
-			regex.lastIndex = 0; 
+			regex.lastIndex = 0;
 			let lastIndex = 0;
 			let match;
 			while ((match = regex.exec(part)) !== null) {
@@ -74,18 +57,29 @@ function formattedText(text) {
 
 /**
  * @author VAMPETA
- * @brief CONVERTE A DATA TIMESTAMP PARA STRING NO FORMATO "dd/mm/aaaa hh:mm"
- * @param {String} timestamp DATA A SER CONVERTIDA
- * @return {String} DATA E HORA FORMATADA
+ * @brief RENDERIZA MENSAGEM DE TEXTO
+ * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
-function formatDate(timestamp) {
-	return new Date(timestamp).toLocaleString("pt-BR", {
-		timeZone: "America/Sao_Paulo",
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-		hour12: false
-	});
+export default function Text({ message }) {
+	return (
+		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
+			{formattedText(message.data.text.body)}
+			<FooterMessage message={message} />
+		</div>
+	);
 }
+
+
+// import React from "react";			// ESTUDAR SE ISSO AKI E UMA SAIDA MAIS EFICIENTE PARA O PROBLEMA DE RE-RENDERIZACAO
+
+// const Text = React.memo(function Text({ message }) {
+// console.log("renderizou");
+// 	return (
+// 		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
+// 			{formattedText(message.data.text.body)}
+// 			<FooterMessage message={message} />
+// 		</div>
+// 	);
+// });
+
+// export default Text;

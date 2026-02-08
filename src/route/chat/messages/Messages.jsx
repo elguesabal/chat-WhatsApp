@@ -18,8 +18,18 @@ export default function Messages({ socket }) {
 		if (!socket) return;
 		socket.emit("open_chat", null, (res) => setMessages(res || []));
 		const handleNewMessage = (newMessage) => setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]));
+		const handleUpdateView = ({ wamid, status }) => {
+			setMessages((prev) => {
+				if (!prev) return (prev);
+				return (prev.map((message) => (message.wamid === wamid) ? { ...message, status } : message));
+			});
+		}
 		socket.on("new_message", handleNewMessage);
-		return (() => socket.off("new_message", handleNewMessage));
+		socket.on("update_view", handleUpdateView);
+		return (() => {
+			socket.off("new_message", handleNewMessage);
+			socket.off("update_view", handleUpdateView);
+		})
 	}, [socket]);
 	useEffect(() => {
 		if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
@@ -28,8 +38,8 @@ export default function Messages({ socket }) {
 	if (messages === null) return (<Load />);
 	return (
 		<div className="flex-1 overflow-y-auto">
-			{messages.map((message, i) => (
-				<div key={i} className={`flex ${(message.direction === "outbound") ? "justify-end" : "justify-start" }`}>
+			{messages.map((message) => (
+				<div key={message.wamid} className={`flex ${(message.direction === "outbound") ? "justify-end" : "justify-start" }`}>
 					{message.data.type === "text" && <Text message={message} />}
 					{message.data.type === "location" && <Location message={message} />}
 				</div>
