@@ -1,4 +1,5 @@
 import FooterMessage from "./FooterMessage.jsx";
+import { memo, useMemo } from "react";
 
 /**
  * @author VAMPETA
@@ -55,24 +56,12 @@ function formattedText(text) {
 	return (parts);
 }
 
-/**
- * @author VAMPETA
- * @brief RENDERIZA MENSAGEM DE TEXTO
- * @param {Object} message MENSAGEM A SER RENDERIZADA
-*/
-export default function Text({ message }) {
-	return (
-		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
-			{formattedText(message.data.text.body)}
-			<FooterMessage message={message} />
-		</div>
-	);
-}
-
-
-// import React from "react";			// ESTUDAR SE ISSO AKI E UMA SAIDA MAIS EFICIENTE PARA O PROBLEMA DE RE-RENDERIZACAO
-
-// const Text = React.memo(function Text({ message }) {
+// /**
+//  * @author VAMPETA
+//  * @brief RENDERIZA MENSAGEM DE TEXTO
+//  * @param {Object} message MENSAGEM A SER RENDERIZADA
+// */
+// export default function Text({ message }) {
 // console.log("renderizou");
 // 	return (
 // 		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
@@ -80,6 +69,23 @@ export default function Text({ message }) {
 // 			<FooterMessage message={message} />
 // 		</div>
 // 	);
-// });
+// }
 
-// export default Text;
+
+/**
+ * @author VAMPETA
+ * @brief RENDERIZA MENSAGEM DE TEXTO
+ * @param {Object} message MENSAGEM A SER RENDERIZADA
+*/
+const Text = memo(function Text({ message }) {
+console.log("renderizou");
+	const text = useMemo(() => formattedText(message.data.text.body), [message.data.text.body]);
+	return (
+		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
+			{text}
+			<FooterMessage message={message} />
+		</div>
+	);
+});
+
+export default Text;

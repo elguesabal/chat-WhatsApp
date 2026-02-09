@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
 import Load from "../../../screens/Load";
+import Error from "../../../screens/Error.jsx";
 
 import Text from "./Text.jsx";
 import Location from "./Location.jsx";
@@ -11,12 +12,19 @@ import Location from "./Location.jsx";
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Messages({ socket }) {
+	const [error, setError] = useState(false);
 	const [messages, setMessages] = useState(null);
 	const bottomRef = useRef(null);
 
 	useEffect(() => {
 		if (!socket) return;
-		socket.emit("open_chat", null, (res) => setMessages(res || []));
+		socket.emit("open_chat", null, (res) => {
+			if (!res || res.error) {
+				setError(true);
+				return ;
+			}
+			setMessages(res);
+		});
 		const handleNewMessage = (newMessage) => setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]));
 		const handleUpdateView = ({ wamid, status }) => {
 			setMessages((prev) => {
@@ -35,7 +43,16 @@ export default function Messages({ socket }) {
 		if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
 	}, [messages]);
 
+	if (error) return (<Error />);
 	if (messages === null) return (<Load />);
+	if (messages.length === 0) {
+		return (
+			<div className="flex-1 overflow-y-auto flex flex-col items-center justify-center">
+				<i className="bi bi-chat-right-text text-white text-5xl" />
+				<p className="text-white">Nenhuma mensagem</p>
+			</div>
+		);
+	}
 	return (
 		<div className="flex-1 overflow-y-auto">
 			{messages.map((message) => (

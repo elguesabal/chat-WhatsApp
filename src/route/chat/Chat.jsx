@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useSocket } from "../../socket/socket.js";
@@ -15,21 +15,27 @@ import Footer from "./footer/Footer.jsx"
  * @brief COMPONENTE PRINCIPAL DO CHAT
 */
 export default function Chat() {
+	const [status, setStatus] = useState("loading");
 	const { idPhone, phone } = useParams();
 	const socket = useSocket(idPhone, phone);
 
 	useEffect(() => {
 		if (!socket) return;
 		socket.connect();
-		socket.on("connect_error", (error) => console.log("Erro ao conectar:", error.message));
+		socket.on("connect", () => setStatus("connected"));
+		socket.on("connect_error", (error) => {
+			console.log("Erro ao conectar:", error.message)
+			setStatus("error");
+		});
 		return (() => socket.disconnect());
 	}, [socket]);
 
-	// if (messages === null) return (<Load />);
 	return (
 		<div className="h-dvh flex flex-col bg-black overflow-hidden">
 			<Header phone={phone} />
-			<Messages socket={socket} />
+				{status === "loading" && <Load />}
+				{status === "connected" && <Messages socket={socket} />}
+				{status === "error" && <Error />}
 			<Footer />
 		</div>
 	);
