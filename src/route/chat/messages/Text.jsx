@@ -78,13 +78,12 @@ function formattedText(text) {
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 const Text = memo(function Text({ message }) {
-console.log("renderizou");
 	const text = useMemo(() => formattedText(message.data.text.body), [message.data.text.body]);
 	return (
-		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
+		<>
 			{text}
 			<FooterMessage message={message} />
-		</div>
+		</>
 	);
 });
 
