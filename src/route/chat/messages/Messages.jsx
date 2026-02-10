@@ -6,7 +6,7 @@ import Error from "../../../screens/Error.jsx";
 import Context from "./context/Context.jsx";
 import Text from "./Text.jsx";
 import Location from "./Location.jsx";
-import Reaction from "./reaction.jsx";
+import Reaction from "./Reaction.jsx";
 
 /**
  * @author VAMPETA
