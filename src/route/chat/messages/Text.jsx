@@ -1,4 +1,3 @@
-import FooterMessage from "./FooterMessage.jsx";
 import { memo, useMemo } from "react";
 
 /**
@@ -56,22 +55,6 @@ function formattedText(text) {
 	return (parts);
 }
 
-// /**
-//  * @author VAMPETA
-//  * @brief RENDERIZA MENSAGEM DE TEXTO
-//  * @param {Object} message MENSAGEM A SER RENDERIZADA
-// */
-// export default function Text({ message }) {
-// console.log("renderizou");
-// 	return (
-// 		<div className="inline-block bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
-// 			{formattedText(message.data.text.body)}
-// 			<FooterMessage message={message} />
-// 		</div>
-// 	);
-// }
-
-
 /**
  * @author VAMPETA
  * @brief RENDERIZA MENSAGEM DE TEXTO
@@ -79,11 +62,9 @@ function formattedText(text) {
 */
 const Text = memo(function Text({ message }) {
 	const text = useMemo(() => formattedText(message.data.text.body), [message.data.text.body]);
+
 	return (
-		<>
-			{text}
-			<FooterMessage message={message} />
-		</>
+		<p>{text}</p>
 	);
 });
 
