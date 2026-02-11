@@ -69,7 +69,7 @@ function Message({ message }) {
  * @brief MENSAGENS DO CHAT
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-export default function Messages({ socket }) {
+export default function Messages({ socket }) {					// TESTANDO
 	const [error, setError] = useState(false);
 	const [messages, setMessages] = useState(null);
 	const bottomRef = useRef(null);
