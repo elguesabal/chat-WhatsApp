@@ -1,6 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
+import { useChatMessages } from "./useChatMessages.js";
+import { useScroll } from "./useScroll.js";
 
-import Load from "../../../screens/Load";
+import Load from "../../../screens/Load.jsx";
 import Error from "../../../screens/Error.jsx";
 
 import FooterMessage from "./FooterMessage.jsx";
@@ -8,43 +10,6 @@ import Context from "./context/Context.jsx";
 import Text from "./Text.jsx";
 import Location from "./Location.jsx";
 import Reaction from "./Reaction.jsx";
-
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA MENSAGEM
- * @param {Object} setMessages DEFINE O VALOR DE messages
-*/
-function handleNewMessage(setMessages) {
-	return ((newMessage) => setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage])));
-}
-
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA VISUALIZACAO DE MENSAGEM
- * @param {Object} setMessages DEFINE O VALOR DE messages
-*/
-function handleUpdateView(setMessages) {
-	return (({ wamid, status }) => {
-		setMessages((prev) => {
-			if (!prev) return (prev);
-			return (prev.map((message) => (message.wamid === wamid) ? { ...message, status } : message));
-		});
-	});
-}
-
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA REACAO DE MENSAGEM
- * @param {Object} setMessages DEFINE O VALOR DE messages
-*/
-function handleNewReact(setMessages) {
-	return (({ wamid, react }) => {
-		setMessages((prev) => {
-			if (!prev) return (prev);
-			return (prev.map((message) => (message.wamid === wamid) ? { ...message, react } : message));
-		});
-	});
-}
 
 /**
  * @author VAMPETA
@@ -70,34 +35,25 @@ function Message({ message }) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Messages({ socket }) {
-	const [error, setError] = useState(false);
-	const [messages, setMessages] = useState(null);
-	const bottomRef = useRef(null);
+	// const { messages, error } = useChatMessages(socket);
+	// const { bottomRef } = useScroll(messages);
+const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket);
+const { bottomRef } = useScroll(messages);
+const containerRef = useRef(null);
 
-	useEffect(() => {
-		if (!socket) return;
-		socket.emit("open_chat", null, (res) => {
-			if (!res || res.error) {
-				setError(true);
-				return ;
-			}
-			setMessages(res);
-		});
-		const onNewMessage = handleNewMessage(setMessages);
-		const onUpdateView = handleUpdateView(setMessages);
-		const onNewReact = handleNewReact(setMessages);
-		socket.on("new_message", onNewMessage);
-		socket.on("update_view", onUpdateView);
-		socket.on("new_react", onNewReact);
-		return (() => {
-			socket.off("new_message", onNewMessage);
-			socket.off("update_view", onUpdateView);
-			socket.off("new_react", onNewReact);
-		})
-	}, [socket]);
-	useEffect(() => {
-		if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
-	}, [messages]);
+useEffect(() => {
+	const el = containerRef.current;
+	if (!el) return;
+
+	const onScroll = () => {
+		if (el.scrollTop === 0 && hasMore && !loadingMore) {
+			loadMore();
+		}
+	};
+
+	el.addEventListener("scroll", onScroll);
+	return () => el.removeEventListener("scroll", onScroll);
+}, [loadMore, hasMore, loadingMore]);
 
 	if (error) return (<Error />);
 	if (messages === null) return (<Load />);
@@ -110,7 +66,10 @@ export default function Messages({ socket }) {
 		);
 	}
 	return (
-		<div className="flex-1 overflow-y-auto scroll-smooth">
+		<div ref={containerRef} className="flex-1 overflow-y-auto scroll-smooth">
+{loadingMore && (
+	<div className="text-center text-gray-400 py-2 text-sm">Carregando mensagens...</div>
+)}
 			{messages.map((message) => (
 				<div key={message.wamid} id={message.wamid} className={`flex ${(message.direction === "outbound") ? "justify-end" : "justify-start" }`}>
 					<div className="inline-block relative bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
