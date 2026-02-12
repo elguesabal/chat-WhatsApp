@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./style/index.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import Chat from "./route/chat/Chat.jsx";
 
 createRoot(document.getElementById("root")).render(
