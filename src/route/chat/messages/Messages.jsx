@@ -1,6 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useRef, useLayoutEffect } from "react";
 import { useChatMessages } from "./useChatMessages.js";
-import { useScroll } from "./useScroll.js";
 
 import Load from "../../../screens/Load.jsx";
 import Error from "../../../screens/Error.jsx";
@@ -19,13 +18,11 @@ import Reaction from "./Reaction.jsx";
 function Message({ message }) {
 	switch (message.data.type) {
 		case "text":
-			return (<Text message={message} />);
+			return <Text message={message} />;
 		case "location":
-			return (<Location message={message} />);
+			return <Location message={message} />;
 		default:
-			return (
-				<p className="text-red-900"><i>Mensagem do tipo <b>{message.data.type}</b> não suportada</i></p>
-			);
+			return (<p className="text-red-900"><i>Mensagem do tipo <b>{message.data.type}</b> não suportada</i></p>);
 	}
 }
 
@@ -35,25 +32,45 @@ function Message({ message }) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Messages({ socket }) {
-	// const { messages, error } = useChatMessages(socket);
-	// const { bottomRef } = useScroll(messages);
-const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket);
-const { bottomRef } = useScroll(messages);
-const containerRef = useRef(null);
+	const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket);
+	const containerRef = useRef(null);
+	const bottomRef = useRef(null);
+	const prevScrollHeightRef = useRef(0);
+	const isFirstLoadRef = useRef(true);
+	const isPrependingRef = useRef(false);
+	const isAtBottomRef = useRef(true);
 
-useEffect(() => {
-	const el = containerRef.current;
-	if (!el) return;
+	const handleScroll = (e) => {
+		const el = e.currentTarget;
+		const distanceFromBottom = el.scrollHeight - (el.scrollTop + el.clientHeight);
 
-	const onScroll = () => {
-		if (el.scrollTop === 0 && hasMore && !loadingMore) {
+		isAtBottomRef.current = distanceFromBottom < 50;
+		if (el.scrollTop <= 0 && hasMore && !loadingMore) {
+			prevScrollHeightRef.current = el.scrollHeight;
+			isPrependingRef.current = true;
 			loadMore();
 		}
 	};
 
-	el.addEventListener("scroll", onScroll);
-	return () => el.removeEventListener("scroll", onScroll);
-}, [loadMore, hasMore, loadingMore]);
+	useLayoutEffect(() => {
+		const el = containerRef.current;
+
+		if (!el || !messages || messages.length === 0) return ;
+		if (isFirstLoadRef.current) {
+			el.scrollTop = el.scrollHeight;
+			isFirstLoadRef.current = false;
+			return ;
+		}
+		if (isPrependingRef.current) {
+			const prevHeight = prevScrollHeightRef.current;
+			const newHeight = el.scrollHeight;
+			el.scrollTop = newHeight - prevHeight;
+			isPrependingRef.current = false;
+			prevScrollHeightRef.current = 0;
+			return ;
+		}
+		if (isAtBottomRef.current && bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
 
 	if (error) return (<Error />);
 	if (messages === null) return (<Load />);
@@ -66,12 +83,9 @@ useEffect(() => {
 		);
 	}
 	return (
-		<div ref={containerRef} className="flex-1 overflow-y-auto scroll-smooth">
-{loadingMore && (
-	<div className="text-center text-gray-400 py-2 text-sm">Carregando mensagens...</div>
-)}
+		<div ref={containerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto" >
 			{messages.map((message) => (
-				<div key={message.wamid} id={message.wamid} className={`flex ${(message.direction === "outbound") ? "justify-end" : "justify-start" }`}>
+				<div key={message.wamid} id={message.wamid} className={`flex ${message.direction === "outbound" ? "justify-end" : "justify-start"}`} >
 					<div className="inline-block relative bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
 						{message.context && <Context message={message} phone={socket.auth.phone} />}
 						<>

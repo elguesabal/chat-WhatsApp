@@ -33,9 +33,9 @@ export default function Chat() {
 	return (
 		<div className="h-dvh flex flex-col bg-black overflow-hidden">
 			<Header phone={phone} />
-				{status === "loading" && <Load />}
-				{status === "connected" && <Messages socket={socket} />}
-				{status === "error" && <Error />}
+			{status === "loading" && <Load />}
+			{status === "connected" && <Messages socket={socket} />}
+			{status === "error" && <Error />}
 			<Footer />
 		</div>
 	);
