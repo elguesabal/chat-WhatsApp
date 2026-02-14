@@ -1,5 +1,5 @@
-import { useRef, useLayoutEffect } from "react";
 import { useChatMessages } from "./useChatMessages.js";
+import { useScroll } from "./useScroll.js";
 
 import Load from "../../../screens/Load.jsx";
 import Error from "../../../screens/Error.jsx";
@@ -33,44 +33,7 @@ function Message({ message }) {
 */
 export default function Messages({ socket }) {
 	const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket);
-	const containerRef = useRef(null);
-	const bottomRef = useRef(null);
-	const prevScrollHeightRef = useRef(0);
-	const isFirstLoadRef = useRef(true);
-	const isPrependingRef = useRef(false);
-	const isAtBottomRef = useRef(true);
-
-	const handleScroll = (e) => {
-		const el = e.currentTarget;
-		const distanceFromBottom = el.scrollHeight - (el.scrollTop + el.clientHeight);
-
-		isAtBottomRef.current = distanceFromBottom < 50;
-		if (el.scrollTop <= 0 && hasMore && !loadingMore) {
-			prevScrollHeightRef.current = el.scrollHeight;
-			isPrependingRef.current = true;
-			loadMore();
-		}
-	};
-
-	useLayoutEffect(() => {
-		const el = containerRef.current;
-
-		if (!el || !messages || messages.length === 0) return ;
-		if (isFirstLoadRef.current) {
-			el.scrollTop = el.scrollHeight;
-			isFirstLoadRef.current = false;
-			return ;
-		}
-		if (isPrependingRef.current) {
-			const prevHeight = prevScrollHeightRef.current;
-			const newHeight = el.scrollHeight;
-			el.scrollTop = newHeight - prevHeight;
-			isPrependingRef.current = false;
-			prevScrollHeightRef.current = 0;
-			return ;
-		}
-		if (isAtBottomRef.current && bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
-	}, [messages]);
+	const { containerRef, bottomRef, handleScroll } = useScroll({ messages, hasMore, loadingMore, loadMore });
 
 	if (error) return (<Error />);
 	if (messages === null) return (<Load />);
@@ -83,7 +46,12 @@ export default function Messages({ socket }) {
 		);
 	}
 	return (
-		<div ref={containerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto" >
+		<div ref={containerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto">
+			{loadingMore && (
+				<div className="flex items-center justify-center mt-2">
+					<div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
+				</div>
+			)}
 			{messages.map((message) => (
 				<div key={message.wamid} id={message.wamid} className={`flex ${message.direction === "outbound" ? "justify-end" : "justify-start"}`} >
 					<div className="inline-block relative bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
@@ -100,3 +68,18 @@ export default function Messages({ socket }) {
 		</div>
 	);
 }
+
+
+
+// <div className="relative flex-1 overflow-y-aut">		// IDEIA PARA ADICIONAR BOTAO DE SCROLL
+// 	<div ref={containerRef} onScroll={handleScroll}>
+// 		{messages.map(...)}
+// 		<div ref={bottomRef} />
+// 	</div>
+
+// 	{!isAtBottom && (
+// 		<button onClick={() => bottomRef.current?.scrollIntoView({ behavior: "smooth" })} className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-green-600 shadow-lg hover:scale-105 transition">
+// 			↓
+// 		</button>
+// 	)}
+// </div>
