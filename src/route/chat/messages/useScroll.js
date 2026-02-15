@@ -42,5 +42,5 @@ export function useScroll({ messages, hasMore, loadingMore, loadMore }) {
 		}
 		if (state.isAtBottom && bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
 	}, [messages]);
-	return ({ containerRef, bottomRef, handleScroll });
+	return ({ containerRef, bottomRef, handleScroll, isAtBottom: stateRef.current.isAtBottom });
 }
