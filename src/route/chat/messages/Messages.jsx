@@ -47,9 +47,9 @@ export default function Messages({ socket }) {
 	}
 	return (
 		<div ref={containerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto">
-{!isAtBottom && (
-	<button className="bg-orange-500 absolute bottom-20 right-10 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition z-50" onClick={() => bottomRef.current.scrollIntoView({ behavior: "smooth" })}>↓</button>
-)}
+{/* {!isAtBottom && (
+	<button className="bg-gray-500 absolute bottom-20 right-10 text-white px-4 py-3 rounded hover:bg-orange-500 transition z-1" onClick={() => bottomRef.current.scrollIntoView({ behavior: "smooth" })}>↓</button>
+)} */}
 			{loadingMore && (
 				<div className="flex items-center justify-center mt-2">
 					<div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
@@ -71,18 +71,3 @@ export default function Messages({ socket }) {
 		</div>
 	);
 }
-
-
-
-// <div className="relative flex-1 overflow-y-aut">		// IDEIA PARA ADICIONAR BOTAO DE SCROLL
-// 	<div ref={containerRef} onScroll={handleScroll}>
-// 		{messages.map(...)}
-// 		<div ref={bottomRef} />
-// 	</div>
-
-// 	{!isAtBottom && (
-// 		<button onClick={() => bottomRef.current?.scrollIntoView({ behavior: "smooth" })} className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-green-600 shadow-lg hover:scale-105 transition">
-// 			↓
-// 		</button>
-// 	)}
-// </div>

@@ -36,7 +36,7 @@ export default function Chat() {
 			{status === "loading" && <Load />}
 			{status === "connected" && <Messages socket={socket} />}
 			{status === "error" && <Error />}
-			<Footer />
+			<Footer socket={socket} />
 		</div>
 	);
 }
