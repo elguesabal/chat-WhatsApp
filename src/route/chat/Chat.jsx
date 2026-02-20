@@ -32,7 +32,7 @@ export default function Chat() {
 
 	return (
 		<div className="h-dvh flex flex-col bg-black overflow-hidden">
-			<Header phone={phone} />
+			<Header socket={socket} />
 			{status === "loading" && <Load />}
 			{status === "connected" && <Messages socket={socket} />}
 			{status === "error" && <Error />}
