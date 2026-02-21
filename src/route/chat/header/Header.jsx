@@ -1,11 +1,4 @@
-import { useState, useEffect } from "react";
-
-async function botOnOff(socket, setStateBot, stateBot) {
-	if (!socket) return ;
-	socket.emit("config:bot:on_off", { stateBot: stateBot }, (res) => {
-		setStateBot(res);
-	});
-}
+import { botOnOff, useStateBot } from "./useStateBot";
 
 /**
  * @author VAMPETA
@@ -13,11 +6,7 @@ async function botOnOff(socket, setStateBot, stateBot) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Header({ socket }) {
-	const [stateBot, setStateBot] = useState(null);
-
-	useEffect(() => {
-		botOnOff(socket, setStateBot);
-	}, [socket]);
+	const { stateBot, setStateBot } = useStateBot(socket);
 
 	return (
 		<div className="flex items-center justify-evenly h-14 bg-gray-900 shrink-0">

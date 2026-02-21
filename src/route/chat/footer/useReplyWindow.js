@@ -10,7 +10,7 @@ export function useReplyWindow(socket) {
 
 	useEffect(() => {
 		if (!socket) return ;
-		socket.emit("reply_window", {}, (res) => {
+		socket.emit("messages:reply_window", {}, (res) => {
 			setReplyWindow(res);
 		});
 	}, [socket]);

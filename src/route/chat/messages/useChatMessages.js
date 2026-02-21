@@ -51,7 +51,7 @@ export function useChatMessages(socket) {
 
 	useEffect(() => {
 		if (!socket) return ;
-		socket.emit("load_chat", {}, (res) => {
+		socket.emit("messages:load_messages", {}, (res) => {
 			if (!res || res.error) {
 				setError(true);
 				return ;
@@ -63,19 +63,19 @@ export function useChatMessages(socket) {
 		const onNewMessage = handleNewMessage(setMessages);
 		const onUpdateView = handleUpdateView(setMessages);
 		const onNewReact = handleNewReact(setMessages);
-		socket.on("new_message", onNewMessage);
-		socket.on("update_view", onUpdateView);
-		socket.on("new_react", onNewReact);
+		socket.on("messages:new_message", onNewMessage);
+		socket.on("messages:update_view", onUpdateView);
+		socket.on("messages:new_react", onNewReact);
 		return (() => {
-			socket.off("new_message", onNewMessage);
-			socket.off("update_view", onUpdateView);
-			socket.off("new_react", onNewReact);
+			socket.off("messages:new_message", onNewMessage);
+			socket.off("messages:update_view", onUpdateView);
+			socket.off("messages:new_react", onNewReact);
 		})
 	}, [socket]);
 	const loadMore = useCallback(() => {
 		if (!socket || loadingMore || !hasMore) return ;
 		setLoadingMore(true);
-		socket.emit("load_chat", { beforeId: cursorRef.current }, (res) => {
+		socket.emit("messages:load_messages", { beforeId: cursorRef.current }, (res) => {
 			if (!res || res.error || !Array.isArray(res.messages) || res.messages.length === 0) {
 				setLoadingMore(false);
 				return ;

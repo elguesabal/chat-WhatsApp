@@ -8,7 +8,7 @@
 */
 export function sendText(socket, message, setMessage, textareaRef) {
 	if (!message.trim()) return;
-	socket.emit("send_text", { text: message });
+	socket.emit("messages:send_text", { text: message });
 	setMessage("");
 	textareaRef.current.style.height = "auto";
 }
