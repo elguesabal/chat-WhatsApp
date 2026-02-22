@@ -33,7 +33,7 @@ function Message({ message }) {
 */
 export default function Messages({ socket }) {
 	const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket);
-	const { containerRef, bottomRef, handleScroll, isAtBottom } = useScroll({ messages, hasMore, loadingMore, loadMore });
+	const { containerRef, bottomRef, handleScroll } = useScroll({ messages, hasMore, loadingMore, loadMore });
 
 	if (error) return (<Error />);
 	if (messages === null) return (<Load />);
@@ -47,9 +47,6 @@ export default function Messages({ socket }) {
 	}
 	return (
 		<div ref={containerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto">
-{/* {!isAtBottom && (
-	<button className="bg-gray-500 absolute bottom-20 right-10 text-white px-4 py-3 rounded hover:bg-orange-500 transition z-1" onClick={() => bottomRef.current.scrollIntoView({ behavior: "smooth" })}>↓</button>
-)} */}
 			{loadingMore && (
 				<div className="flex items-center justify-center mt-2">
 					<div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>

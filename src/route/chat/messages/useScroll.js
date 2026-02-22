@@ -12,7 +12,6 @@ export function useScroll({ messages, hasMore, loadingMore, loadMore }) {
 	const containerRef = useRef(null);
 	const bottomRef = useRef(null);
 	const stateRef = useRef({ isFirstLoad: true, isPrepending: false, prevScrollHeight: 0, isAtBottom: true, });
-
 	const handleScroll = useCallback((e) => {
 		const el = e.currentTarget;
 		const distanceFromBottom = el.scrollHeight - (el.scrollTop + el.clientHeight);
@@ -42,5 +41,5 @@ export function useScroll({ messages, hasMore, loadingMore, loadMore }) {
 		}
 		if (state.isAtBottom && bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
 	}, [messages]);
-	return ({ containerRef, bottomRef, handleScroll, isAtBottom: stateRef.current.isAtBottom });
+	return ({ containerRef, bottomRef, handleScroll });
 }

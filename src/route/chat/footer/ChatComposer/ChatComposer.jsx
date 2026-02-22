@@ -55,7 +55,9 @@ export function ChatComposer({ socket }) {
 					<i className="bi bi-send-fill text-lg" />
 				</button>
 			</div>
-			<Options socket={socket} options={options} />
+			<div className={`flex-1 overflow-y-auto transition-all duration-300 ease-in-out ${(options) ? "max-h-90" : "max-h-0"}`}>
+				<Options socket={socket} />
+			</div>
 		</>
 	);
 }
