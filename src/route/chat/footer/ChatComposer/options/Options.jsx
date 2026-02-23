@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useQuickMessages } from "./useQuickMessages";
 
 import { Text, sendReadyText } from "./Text";
 import { Location, sendReadyLocation } from "./Locatioin";
@@ -41,17 +41,20 @@ function Message({ message }) {
  * @brief COMPONENTE RESPONSAVEL POR EXIBIR O MENU DE OPCOES
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-export function Options({ socket }) {
-	const [messages, setMessages] = useState(null);			// CRIAR HOOK
+export default function Options({ socket }) {
+	const { messages } = useQuickMessages(socket);
 
-	useEffect(() => {
-		socket.emit("messages:quick_messages", {}, (res) => {
-			setMessages(res);
-		});
-	}, [socket]);
-
-	if (messages === null) return (<p className="text-white">Carregando</p>);										// CRIAR ANIMACAO DE LOAD
-	if (Array.isArray(messages) && messages.length === 0) return (<p className="text-white">Sem mensagens</p>);		// CRIAR TELA DE AVISO
+	if (messages === null) return (
+		<div className="flex items-center justify-center h-[100%]">
+			<div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
+		</div>
+	);
+	if (Array.isArray(messages) && messages.length === 0) return (
+		<div className="flex flex-col items-center justify-center h-[100%]">
+			<i className="bi bi-chat-right-text text-white text-5xl" />
+			<p className="text-white">Nenhuma mensagem</p>
+		</div>
+	);
 	return (
 		<>
 			{messages.map((message, i) => (

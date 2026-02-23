@@ -1,6 +1,6 @@
 import { useReplyWindow } from "./useReplyWindow.js";
 
-import { ChatComposer } from "./ChatComposer/ChatComposer.jsx";
+import { ChatComposer } from "./chatComposer/ChatComposer.jsx";
 
 /**
  * @author VAMPETA
@@ -20,7 +20,7 @@ function OutsideResponseWindow() {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Footer({ socket }) {
-	const { replyWindow, setReplyWindow } = useReplyWindow(socket);
+	const { replyWindow } = useReplyWindow(socket);
 
 	switch (replyWindow) {
 		case null:
