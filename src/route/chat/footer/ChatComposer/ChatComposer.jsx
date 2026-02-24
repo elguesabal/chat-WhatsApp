@@ -23,8 +23,8 @@ function handleInput(setMessage, value, textareaRef) {
  * @param {Object} setMessage MODIFICADOR DA VARIAVEL message
  * @param {Object} textareaRef REFERENCIA DA TAG textarea
 */
-export function sendText(socket, message, setMessage, textareaRef) {
-	if (!message.trim()) return;
+function sendText(socket, message, setMessage, textareaRef) {
+	if (!message.trim()) return ;
 	socket.emit("messages:send_text", { text: message });
 	setMessage("");
 	textareaRef.current.style.height = "auto";
@@ -50,7 +50,7 @@ function handleKeyDown(element, socket, message, setMessage, textareaRef) {
  * @brief COMPONENTE RESPONSAVEL POR GERAR O CAMPO DE DIGITACAO DA MENSAGEM E BOTAO DE ENVIAR
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-export function ChatComposer({ socket }) {
+export default function ChatComposer({ socket }) {
 	const [message, setMessage] = useState("");
 	const textareaRef = useRef(null);
 	const [options, setOptions] = useState(false);
