@@ -1,6 +1,6 @@
 import { useReplyWindow } from "./useReplyWindow.js";
 
-import ChatComposer from "./chatComposer/ChatComposer.jsx";
+import ChatComposer from "./achatComposer/ChatComposer.jsx";
 
 /**
  * @author VAMPETA
