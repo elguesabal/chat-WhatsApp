@@ -38,3 +38,52 @@ createRoot(document.getElementById("root")).render(
 		</BrowserRouter>
 	// </StrictMode>
 );
+
+
+
+// import { createContext, useState, useRef, useEffect } from "react";
+
+// import server from "./server.js";
+
+// const SocketContext = createContext();
+
+// /**
+//  * @author VAMPETA
+//  * @brief FUNCAO QUE CRIA A CONEXAO COM O WEBSOCKET
+//  * @param children ELEMENTO FILHO
+// */
+// function SocketProvider({ children }) {
+// 	const socketRef = useRef(null);
+// 	const [socket, setSocket] = useState(null);
+
+// 	useEffect(() => {
+// 		const token = Cookies.get("token");
+
+// 		if (!token) return;
+// 		socketRef.current = io(server, {
+// 			autoConnect: false,
+// 			transports: ["websocket"],
+// 			auth: {
+// 				token: token
+// 			}
+// 		});
+// 		socketRef.current.connect();
+// 		setSocket(newSocket);
+// 		return (() => socketRef.current?.disconnect());
+// 	}, []);
+
+// 	return (
+// 		<SocketContext.Provider value={socketRef.current}>
+// 			{children}
+// 		</SocketContext.Provider>
+// 	);
+// }
+
+
+
+// import { useContext } from "react";
+// import { SocketContext } from "./SocketProvider";
+
+// export function useSocket() {
+//   return useContext(SocketContext);
+// }

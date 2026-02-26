@@ -33,11 +33,6 @@ async function login(phone, password, navigate, setError) {
 				path: "/",
 				sameSite: "Strict"
 			});
-			// Cookies.set("password", password, {
-			// 	expires: 7,
-			// 	path: "/",
-			// 	sameSite: "Strict"
-			// });
 			Cookies.set("idPhone", idPhone, {
 				expires: 7,
 				path: "/",

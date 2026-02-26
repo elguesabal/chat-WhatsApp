@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { useSocket } from "../../socket/socket.js";
 
@@ -17,14 +18,16 @@ import Footer from "./footer/Footer.jsx"
 export default function Chat() {
 	const [status, setStatus] = useState("loading");
 	const { idPhone, phone } = useParams();
-	const socket = useSocket(idPhone, phone);
+	// const socket = useSocket(idPhone, phone);
+	const token = Cookies.get("token");
+	const socket = useSocket(token);
 
 	useEffect(() => {
-		if (!socket) return;
+		if (!socket) return ;
 		socket.connect();
 		socket.on("connect", () => setStatus("connected"));
 		socket.on("connect_error", (error) => {
-			console.log("Erro ao conectar:", error.message)
+			console.log("Erro ao conectar:", error.message);
 			setStatus("error");
 		});
 		return (() => socket.disconnect());
