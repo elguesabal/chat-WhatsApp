@@ -6,15 +6,18 @@ import axios from "axios";
 
 import server from "../../server.js";
 
+import { useSocket } from "../../socket/useSocket.js";
+
 /**
  * @author VAMPETA
  * @brief FUNCAO RESPONSAVEL POR LOGAR
  * @param phone LOGIN DO USUARIO
  * @param password SENHA DO USUARIO
- * @param navigate FUNCAO DE CONTROLE DE ROTA
  * @param setError FUNCAO DE CONTROLE DE ESTADO DE ERRO
+ * @param navigate FUNCAO DE CONTROLE DE ROTA
+ * @param socket CONEXAO COM O SOCKET
 */
-async function login(phone, password, navigate, setError) {
+async function login(phone, password, setError, navigate, socket) {
 	try {
 		if (phone.length !== 13 || !password) return ;
 		const res = await axios({
@@ -25,26 +28,13 @@ async function login(phone, password, navigate, setError) {
 				password: password
 			}
 		});
-		if (res.status === 200) {
-			const { idPhone, token } = res.data;
-			if (!idPhone || !token) return ;
-			Cookies.set("phone", phone, {
-				expires: 7,
-				path: "/",
-				sameSite: "Strict"
-			});
-			Cookies.set("idPhone", idPhone, {
-				expires: 7,
-				path: "/",
-				sameSite: "Strict"
-			});
-			Cookies.set("token", token, {
-				expires: 7,
-				path: "/",
-				sameSite: "Strict"
-			});
-			navigate(`/chat`);
-		}
+		if (res.status !== 200) return ;
+		const { idPhone, token } = res.data;
+		if (!idPhone || !token) return ;
+		Cookies.set("phone", phone, { expires: 7, path: "/", sameSite: "Strict" });
+		Cookies.set("idPhone", idPhone, { expires: 7, path: "/", sameSite: "Strict" });
+		Cookies.set("token", token, { expires: 7, path: "/", sameSite: "Strict" });
+		navigate(`/chat`);
 	} catch (error) {
 		setError("Usuário ou senha incorretos");
 	}
@@ -55,10 +45,11 @@ async function login(phone, password, navigate, setError) {
  * @brief PAGINA DE LOGIN
 */
 export default function Login() {
-	const [phone, setPhone] = useState("");
-	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
+	const [phone, setPhone] = useState("21998869425");
+	const [password, setPassword] = useState("123");
 	const [error, setError] = useState("");
+	const navigate = useNavigate();
+	const socket = useSocket();
 
 	useEffect(() => {
 		if (!error) return ;
@@ -80,7 +71,7 @@ export default function Login() {
 						<input className="px-4 py-2 rounded-lg bg-black border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-orange-500" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
 					</div>
 					{error && <p className="text-center text-red-500 transition-opacity duration-300">{error}</p>}
-					<button className={`mt-4 py-2 bg-orange-500 text-black font-medium rounded-lg hover:bg-orange-400 transition ${(phone.length !== 11 || !password) ? "cursor-not-allowed": "cursor-pointer"}`} onClick={() => login("55" + phone, password, navigate, setError)} disabled={phone.length !== 11 || !password}>Entrar</button>
+					<button className={`mt-4 py-2 bg-orange-500 text-black font-medium rounded-lg hover:bg-orange-400 transition ${(phone.length !== 11 || !password) ? "cursor-not-allowed": "cursor-pointer"}`} onClick={() => login("55" + phone, password, setError, navigate, socket)} disabled={phone.length !== 11 || !password}>Entrar</button>
 				</div>
 			</div>
 		</div>

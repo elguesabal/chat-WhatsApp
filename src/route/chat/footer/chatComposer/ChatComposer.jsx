@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 
 import Options from "./options/Options.jsx";
 
@@ -19,13 +20,14 @@ function handleInput(setMessage, value, textareaRef) {
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA A MENSAGEM PARA O SERVIDOR
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
  * @param {String} message MENSAGEM A SER ENVIADA
  * @param {Object} setMessage MODIFICADOR DA VARIAVEL message
  * @param {Object} textareaRef REFERENCIA DA TAG textarea
 */
-function sendText(socket, message, setMessage, textareaRef) {
+function sendText(socket, phone, message, setMessage, textareaRef) {
 	if (!message.trim()) return ;
-	socket.emit("messages:send_text", { text: message });
+	socket.emit("messages:send_text", { phone: phone, text: message });
 	setMessage("");
 	textareaRef.current.style.height = "auto";
 }
@@ -33,15 +35,16 @@ function sendText(socket, message, setMessage, textareaRef) {
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE CONTROLA A ACAO DA TECLA ENTER E ENVIA A MENSAGEM
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
  * @param {Object} element ELEMENTO DO TEXTAREA
  * @param {Object} setMessage MODIFICADOR DA VARIAVEL message
  * @param {String} value VALOR ANTES DE INCREMENTAR O TEXTAREA
  * @param {Object} textareaRef REFERENCIA DO TEXTEAREA
 */
-function handleKeyDown(element, socket, message, setMessage, textareaRef) {
+function handleKeyDown(phone, element, socket, message, setMessage, textareaRef) {
 	if (element.key === "Enter" && !element.shiftKey) {
 		element.preventDefault();
-		sendText(socket, message, setMessage, textareaRef);
+		sendText(socket, phone, message, setMessage, textareaRef);
 	}
 }
 
@@ -51,6 +54,7 @@ function handleKeyDown(element, socket, message, setMessage, textareaRef) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function ChatComposer({ socket }) {
+	const { phone } = useParams();
 	const [message, setMessage] = useState("");
 	const textareaRef = useRef(null);
 	const [options, setOptions] = useState(false);
@@ -62,9 +66,9 @@ export default function ChatComposer({ socket }) {
 					<i className="bi bi-three-dots" />
 				</button>
 				<div className="flex-1 bg-gray-700 rounded-3xl px-4 py-2 flex items-end">
-					<textarea ref={textareaRef} rows={1} value={message} onChange={(element) => handleInput(setMessage, element.target.value, textareaRef)} onKeyDown={(element) => handleKeyDown(element, socket, message, setMessage, textareaRef)} placeholder="Digite uma mensagem" className="w-full bg-transparent resize-none outline-none text-white placeholder-gray-400 max-h-40 overflow-y-auto" />
+					<textarea ref={textareaRef} rows={1} value={message} onChange={(element) => handleInput(setMessage, element.target.value, textareaRef)} onKeyDown={(element) => handleKeyDown(phone, element, socket, message, setMessage, textareaRef)} placeholder="Digite uma mensagem" className="w-full bg-transparent resize-none outline-none text-white placeholder-gray-400 max-h-40 overflow-y-auto" />
 				</div>
-				<button onClick={() => sendText(socket, message, setMessage, textareaRef)} className={`flex items-center justify-center h-10 w-10 bg-orange-500 transition-colors text-white rounded-full ${(message) ? "cursor-pointer hover:bg-orange-400" : ""}`}>
+				<button onClick={() => sendText(socket, phone, message, setMessage, textareaRef)} className={`flex items-center justify-center h-10 w-10 bg-orange-500 transition-colors text-white rounded-full ${(message) ? "cursor-pointer hover:bg-orange-400" : ""}`}>
 					<i className="bi bi-send-fill text-lg" />
 				</button>
 			</div>

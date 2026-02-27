@@ -4,11 +4,13 @@ import { memo, useMemo } from "react";
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA A MENSAGEM PRONTA DO TIPO TEXT PARA O SERVIDOR
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
  * @param {String} message MENSAGEM A SER ENVIADA
 */
-export function sendReadyText(socket, message) {
+export function sendReadyText(socket, phone, message) {
 	if (!message || !message.text) return ;
 	socket.emit("messages:send_text", {
+		phone: phone,
 		text: message.text
 	});
 }

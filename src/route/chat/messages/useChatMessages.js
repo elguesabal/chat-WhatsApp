@@ -4,18 +4,24 @@ import { useEffect, useState, useRef, useCallback } from "react";
  * @author VAMPETA
  * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA MENSAGEM
  * @param {Object} setMessages DEFINE O VALOR DE messages
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
 */
-function handleNewMessage(setMessages) {
-	return ((newMessage) => setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage])));
+function handleNewMessage(setMessages, phone) {
+	return ((newMessage) => {
+		if (newMessage.phone !== phone) return ;
+		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]))
+	});
 }
 
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA VISUALIZACAO DE MENSAGEM
  * @param {Object} setMessages DEFINE O VALOR DE messages
+ * @param {String} from NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
 */
-function handleUpdateView(setMessages) {
-	return (({ wamid, status }) => {
+function handleUpdateView(setMessages, from) {
+	return (({ phone, wamid, status }) => {
+		if (phone !== from) return ;
 		setMessages((prev) => {
 			if (!prev) return (prev);
 			return (prev.map((message) => (message.wamid === wamid) ? { ...message, status } : message));
@@ -27,9 +33,11 @@ function handleUpdateView(setMessages) {
  * @author VAMPETA
  * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA REACAO DE MENSAGEM
  * @param {Object} setMessages DEFINE O VALOR DE messages
+ * @param {String} from NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
 */
-function handleNewReact(setMessages) {
-	return (({ wamid, react }) => {
+function handleNewReact(setMessages, from) {
+	return (({ phone, wamid, react }) => {
+		if (phone !== from) return ;
 		setMessages((prev) => {
 			if (!prev) return (prev);
 			return (prev.map((message) => (message.wamid === wamid) ? { ...message, react } : message));
@@ -41,8 +49,9 @@ function handleNewReact(setMessages) {
  * @author VAMPETA
  * @brief HOOK QUE CONTROLA A CONEXAO DAS MENSAGENS DO CHAT
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
 */
-export function useChatMessages(socket) {
+export function useChatMessages(socket, phone) {
 	const [messages, setMessages] = useState(null);
 	const [error, setError] = useState(false);
 	const [loadingMore, setLoadingMore] = useState(false);
@@ -51,7 +60,7 @@ export function useChatMessages(socket) {
 
 	useEffect(() => {
 		if (!socket) return ;
-		socket.emit("messages:load_messages", {}, (res) => {
+		socket.emit("messages:load_messages", { phone: phone }, (res) => {
 			if (!res || res.error) {
 				setError(true);
 				return ;
@@ -60,9 +69,9 @@ export function useChatMessages(socket) {
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;
 		});
-		const onNewMessage = handleNewMessage(setMessages);
-		const onUpdateView = handleUpdateView(setMessages);
-		const onNewReact = handleNewReact(setMessages);
+		const onNewMessage = handleNewMessage(setMessages, phone);
+		const onUpdateView = handleUpdateView(setMessages, phone);
+		const onNewReact = handleNewReact(setMessages, phone);
 		socket.on("messages:new_message", onNewMessage);
 		socket.on("messages:update_view", onUpdateView);
 		socket.on("messages:new_react", onNewReact);
@@ -75,7 +84,7 @@ export function useChatMessages(socket) {
 	const loadMore = useCallback(() => {
 		if (!socket || loadingMore || !hasMore) return ;
 		setLoadingMore(true);
-		socket.emit("messages:load_messages", { beforeId: cursorRef.current }, (res) => {
+		socket.emit("messages:load_messages", { phone: phone, beforeId: cursorRef.current }, (res) => {
 			if (!res || res.error || !Array.isArray(res.messages) || res.messages.length === 0) {
 				setLoadingMore(false);
 				return ;

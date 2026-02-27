@@ -1,8 +1,4 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import Cookies from "js-cookie";
-
-import { useSocket } from "../../socket/socket.js";
+import { useSocket } from "../../socket/useSocket.js";
 
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
@@ -16,29 +12,15 @@ import Footer from "./footer/Footer.jsx"
  * @brief COMPONENTE PRINCIPAL DO CHAT
 */
 export default function Chat() {
-	const [status, setStatus] = useState("loading");
-	const { idPhone, phone } = useParams();
-	// const socket = useSocket(idPhone, phone);
-	const token = Cookies.get("token");
-	const socket = useSocket(token);
+	const { socket, connected, error } = useSocket();
 
-	useEffect(() => {
-		if (!socket) return ;
-		socket.connect();
-		socket.on("connect", () => setStatus("connected"));
-		socket.on("connect_error", (error) => {
-			console.log("Erro ao conectar:", error.message);
-			setStatus("error");
-		});
-		return (() => socket.disconnect());
-	}, [socket]);
-
+	if (!socket) return (<Load />);			// TEM QUE ARRUMAR
 	return (
 		<div className="h-dvh flex flex-col bg-black overflow-hidden">
 			<Header socket={socket} />
-			{status === "loading" && <Load />}
-			{status === "connected" && <Messages socket={socket} />}
-			{status === "error" && <Error />}
+			{!connected && !error && <Load />}
+			{connected && <Messages socket={socket} />}
+			{error && <Error />}
 			<Footer socket={socket} />
 		</div>
 	);

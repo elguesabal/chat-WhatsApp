@@ -9,7 +9,7 @@ export function useQuickMessages(socket) {
 	const [messages, setMessages] = useState(null);
 
 	useEffect(() => {
-		socket.emit("messages:quick_messages", {}, (res) => {
+		socket.emit("messages:quick_messages", { }, (res) => {
 			setMessages(res);
 		});
 	}, [socket]);

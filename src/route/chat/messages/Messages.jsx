@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+
 import { useChatMessages } from "./useChatMessages.js";
 import { useScroll } from "./useScroll.js";
 
@@ -32,7 +34,8 @@ function Message({ message }) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Messages({ socket }) {
-	const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket);
+	const { phone } = useParams();
+	const { messages, error, loadMore, hasMore, loadingMore } = useChatMessages(socket, phone);
 	const { containerRef, bottomRef, handleScroll } = useScroll({ messages, hasMore, loadingMore, loadMore });
 
 	if (error) return (<Error />);

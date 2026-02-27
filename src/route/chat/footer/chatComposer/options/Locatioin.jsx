@@ -4,11 +4,13 @@ import { memo } from "react";
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA A MENSAGEM PRONTA DO TIPO LOCATION PARA O SERVIDOR
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
  * @param {Object} message MENSAGEM A SER ENVIADA
 */
-export function sendReadyLocation(socket, message) {
+export function sendReadyLocation(socket, phone, message) {
 	if (!message || !message?.location?.latitude || !message?.location?.longitude) return;
 	socket.emit("messages:send_location", {
+		phone: phone,
 		latitude: message.location.latitude,
 		longitude: message.location.longitude,
 		name: message.location.name,

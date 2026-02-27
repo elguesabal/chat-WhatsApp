@@ -1,21 +1,24 @@
-import { useQuickMessages } from "./useQuickMessages";
+import { useParams } from "react-router-dom";
 
-import { Text, sendReadyText } from "./Text";
-import { Location, sendReadyLocation } from "./Locatioin";
+import { useQuickMessages } from "./useQuickMessages.js";
+
+import { Text, sendReadyText } from "./Text.jsx";
+import { Location, sendReadyLocation } from "./Locatioin.jsx";
 
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE IDENTIFICA O TIPO DA MENSAGEM
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
  * @param {String} message MENSAGEM A SER ENVIADA
 */
-function sendReadyMessage(socket, message) {
+function sendReadyMessage(socket, phone, message) {
 	switch (message.type) {
 		case "text":
-			sendReadyText(socket, message);
+			sendReadyText(socket, phone, message);
 			break;
 		case "location":
-			sendReadyLocation(socket, message);
+			sendReadyLocation(socket, phone, message);
 			break;
 	}
 }
@@ -42,6 +45,7 @@ function Message({ message }) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Options({ socket }) {
+	const { phone } = useParams();
 	const { messages } = useQuickMessages(socket);
 
 	if (messages === null) return (
@@ -58,7 +62,7 @@ export default function Options({ socket }) {
 	return (
 		<>
 			{messages.map((message, i) => (
-				<div className="flex justify-center my-3 cursor-pointer" key={i} onClick={() => sendReadyMessage(socket, message)}>
+				<div className="flex justify-center my-3 cursor-pointer" key={i} onClick={() => sendReadyMessage(socket, phone, message)}>
 					<div className="inline-block bg-gray-400 px-3 py-2 rounded min-w-[60%] max-w-[80%] break-words whitespace-pre-wrap">
 						<Message message={message} />
 					</div>
