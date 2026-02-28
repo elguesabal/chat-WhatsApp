@@ -33,7 +33,7 @@ export function SocketProvider({ children }) {
 		if (socketRef.current) socketRef.current.disconnect();
 		const newSocket = createSocket(token);
 		newSocket.on("connect", () => {
-			console.log("Conectado");
+			// console.log("Conectado");
 			setConnected(true);
 			setError(false);
 		});
@@ -43,7 +43,7 @@ export function SocketProvider({ children }) {
 			setConnected(false);
 		});
 		newSocket.on("disconnect", () => {
-			console.log("Desconectado");
+			// console.log("Desconectado");
 			setConnected(false);
 		});
 		newSocket.connect();
