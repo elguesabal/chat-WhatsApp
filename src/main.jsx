@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import "./style/index.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { SocketProvider } from "./socket/SocketProvider.jsx";
+import Home from "./route/home/home.jsx";
 import Login from "./route/login/Login.jsx";
 import Chats from "./route/chats/Chats.jsx";
 import Chat from "./route/chat/Chat.jsx";
@@ -32,6 +33,7 @@ createRoot(document.getElementById("root")).render(
 	<BrowserRouter>
 		<SocketProvider>
 			<Routes>
+				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
 				<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
