@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 */
 export async function botOnOff(socket, phone, setStateBot, stateBot) {
 	if (!socket) return ;
-	socket.emit("config:bot:on_off", { phone: phone, stateBot: stateBot }, (res) => {
+	socket.emit("chat:bot:on_off", { phone: phone, stateBot: stateBot }, (res) => {
 		setStateBot(res);
 	});
 }

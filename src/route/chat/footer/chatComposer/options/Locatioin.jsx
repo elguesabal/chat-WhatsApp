@@ -9,7 +9,7 @@ import { memo } from "react";
 */
 export function sendReadyLocation(socket, phone, message) {
 	if (!message || !message?.location?.latitude || !message?.location?.longitude) return;
-	socket.emit("messages:send_location", {
+	socket.emit("chat:send:location", {
 		phone: phone,
 		latitude: message.location.latitude,
 		longitude: message.location.longitude,

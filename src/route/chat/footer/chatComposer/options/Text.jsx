@@ -9,7 +9,7 @@ import { memo, useMemo } from "react";
 */
 export function sendReadyText(socket, phone, message) {
 	if (!message || !message.text) return ;
-	socket.emit("messages:send_text", {
+	socket.emit("chat:send:text", {
 		phone: phone,
 		text: message.text
 	});

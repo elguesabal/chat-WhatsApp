@@ -2,7 +2,6 @@ import { useSocket } from "../../socket/useSocket.js";
 
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
-
 import Header from "./header/Header.jsx";
 import Messages from "./messages/Messages.jsx";
 import Footer from "./footer/Footer.jsx"

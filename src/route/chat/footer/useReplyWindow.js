@@ -11,7 +11,7 @@ export function useReplyWindow(socket, phone) {
 
 	useEffect(() => {
 		if (!socket) return ;
-		socket.emit("messages:reply_window", { phone: phone }, (res) => {
+		socket.emit("chat:reply_window", { phone: phone }, (res) => {
 			setReplyWindow(res);
 		});
 	}, [socket]);

@@ -27,7 +27,7 @@ function handleInput(setMessage, value, textareaRef) {
 */
 function sendText(socket, phone, message, setMessage, textareaRef) {
 	if (!message.trim()) return ;
-	socket.emit("messages:send_text", { phone: phone, text: message });
+	socket.emit("chat:send:text", { phone: phone, text: message });
 	setMessage("");
 	textareaRef.current.style.height = "auto";
 }
