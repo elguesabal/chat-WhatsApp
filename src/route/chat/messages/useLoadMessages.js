@@ -47,11 +47,11 @@ function handleNewReact(setMessages, from) {
 
 /**
  * @author VAMPETA
- * @brief HOOK QUE CONTROLA A CONEXAO DAS MENSAGENS DO CHAT
+ * @brief HOOK QUE CONTROLA O LOAD DAS MENSAGENS DO CHAT
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
 */
-export function useChatMessages(socket, phone) {
+export function useLoadMessages(socket, phone) {
 	const [messages, setMessages] = useState(null);
 	const [error, setError] = useState(false);
 	const [loadingMore, setLoadingMore] = useState(false);

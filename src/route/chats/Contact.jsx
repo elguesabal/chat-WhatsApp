@@ -41,8 +41,6 @@ function TypeMessage({ type }) {
 			return (<i className="bi bi-person-vcard mr-2 text-gray-400" />);
 		case "location":
 			return (<i className="bi bi-geo-alt-fill mr-2 text-red-500" />);
-		case "":
-			return (<></>);
 		default:
 			return (<></>);
 	}
@@ -83,3 +81,128 @@ export default function Contact({ socket }) {
 		</div>
 	);
 }
+
+
+
+
+
+
+
+
+
+// /**
+//  * @author VAMPETA
+//  * @brief PAGINA DE CONVERSAS
+//  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+// */
+// export default function Contact({ socket }) {
+// 	const { chats } = useLoadChat(socket);
+
+// 	// if (error) return (<Error />);
+// 	if (chats === null) return (<Load />);
+// 	if (chats.length === 0) {
+// 		return (
+// 			<div className="flex-1 overflow-y-auto flex flex-col items-center justify-center">
+// 				<i className="bi bi-chat-right-text text-white text-5xl" />
+// 				<p className="text-white">Nenhum histórico de conversa</p>
+// 			</div>
+// 		);
+// 	}
+// 	return (
+// 		<div className="flex-1 overflow-y-auto">
+// 			{chats.map((chat, i) => (
+// 				<Link className="w-full my-3 px-6 py-2 bg-gray-800 text-white flex flex-col hover:bg-orange-400 transition" key={i} to={`/chat/${chat.phone}`}>
+// 					<div>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')}</div>
+// 					<div className="flex justify-between items-center">
+// 						<p className="truncate flex-1">
+// 							<TypeMessage type={chat.lastMessage.type} />
+// 							{chat.lastMessage.text}
+// 						</p>
+// 						<span className="ml-2 shrink-0 bg-red-5000 text-xs text-gray-400">{formatDate(chat.lastMessage.timestamp)}</span>
+// 					</div>
+// 				</Link>
+// 			))}
+// 		</div>
+// 	);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useLoadChats } from "./useLoadChats.js";
+// import { useScroll } from "./useScrollChats.js";
+
+// export default function Contact({ socket }) {
+// 	const { chats, error, loadMore, hasMore, loadingMore } = useLoadChats(socket);
+// 	const { containerRef, handleScroll } = useScroll({
+// 		hasMore,
+// 		loadingMore,
+// 		loadMore
+// 	});
+
+// 	if (error) return <Error />;
+// 	if (chats === null) return <Load />;
+
+// 	if (chats.length === 0) {
+// 		return (
+// 			<div className="flex-1 overflow-y-auto flex flex-col items-center justify-center">
+// 				<i className="bi bi-chat-right-text text-white text-5xl" />
+// 				<p className="text-white">Nenhum histórico de conversa</p>
+// 			</div>
+// 		);
+// 	}
+
+// 	return (
+// 		<div
+// 			ref={containerRef}
+// 			onScroll={handleScroll}
+// 			className="flex-1 overflow-y-auto"
+// 		>
+// 			{chats.map((chat, i) => (
+// 				<Link
+// 					key={i}
+// 					className="w-full my-3 px-6 py-2 bg-gray-800 text-white flex flex-col hover:bg-orange-400 transition"
+// 					to={`/chat/${chat.phone}`}
+// 				>
+// 					<div>
+// 						{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')}
+// 					</div>
+
+// 					<div className="flex justify-between items-center">
+// 						<p className="truncate flex-1">
+// 							<TypeMessage type={chat.lastMessage.type} />
+// 							{chat.lastMessage.text}
+// 						</p>
+
+// 						<span className="ml-2 text-xs text-gray-400">
+// 							{formatDate(chat.lastMessage.timestamp)}
+// 						</span>
+// 					</div>
+// 				</Link>
+// 			))}
+
+// 			{/* loading */}
+// 			{loadingMore && (
+// 				<div className="flex items-center justify-center py-2">
+// 					<div className="h-6 w-6 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
+// 				</div>
+// 			)}
+
+// 			{/* fim */}
+// 			{!hasMore && (
+// 				<div className="text-center text-gray-500 py-2">
+// 					Fim da lista
+// 				</div>
+// 			)}
+// 		</div>
+// 	);
+// }
