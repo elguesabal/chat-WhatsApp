@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 /**
  * @author VAMPETA
- * @brief HEADER DO CHAT
+ * @brief FUNCAO QUE CONSULTA OU MODIFICA SE O BOT ESTA ATIVO
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
  * @param {Object} setStateBot MODIFICADOR DE stateBot
- * @param {Object} stateBot VARIAVEL QUE INDICA SE O BOT ESTA ATIVO
+ * @param {Object} stateBot VARIAVEL QUE INDICA SE O BOT ESTA ATIVO (SE FOR undefined CONSULTA O ESTADO DO BOT E SE TIVER VALOR MODIFICA PARA AQUELE VALOR)
 */
 export async function botOnOff(socket, phone, setStateBot, stateBot) {
 	if (!socket) return ;
