@@ -1,5 +1,11 @@
 import { useEffect } from "react";
 
+function handleNewMessage(setChats) {
+	return ((newMessage) => {
+console.log(newMessage.phone, ":", newMessage.data.text.body)	// PAREI AKI
+	});
+}
+
 /**
  * @author VAMPETA
  * @brief HOOK QUE ADICIONA OS EVENTOS ON DE WEBSOCKET
@@ -8,6 +14,10 @@ import { useEffect } from "react";
  */
 export function useChatsRealTime(socket, setChats) {
 	useEffect(() => {
-						// AKI EU CONFIGURO OS EVENTOS ON DO WEBSOCKET
+		const onNewMessage = handleNewMessage(setChats);
+		socket.on("chat:new_message", onNewMessage);
+		return (() => {
+			socket.off("chat:new_message", onNewMessage);
+		})
 	}, [socket]);
 }

@@ -61,9 +61,9 @@ export function useChatRealtime(socket, phone, setMessages) {
 		socket.on("chat:update_view", onUpdateView);
 		socket.on("chat:new_react", onNewReact);
 		return (() => {
-			socket.off("messages:new_message", onNewMessage);
-			socket.off("messages:update_view", onUpdateView);
-			socket.off("messages:new_react", onNewReact);
+			socket.off("chat:new_message", onNewMessage);
+			socket.off("chat:update_view", onUpdateView);
+			socket.off("chat:new_react", onNewReact);
 		})
 	}, [socket]);
 }

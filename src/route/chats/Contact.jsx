@@ -65,7 +65,7 @@ function TypeMessage({ type }) {
 export default function Contact({ socket }) {
 	const { chats, setChats, error, loadMore, hasMore, loadingMore } = useLoadChats(socket);
 	const { containerRef, handleScroll } = useScroll({ hasMore, loadingMore, loadMore });
-	// useChatsRealTime(socket, setChats);
+	useChatsRealTime(socket, setChats);
 
 	if (error) return (<Error />);
 	if (chats === null) return (<Load />);
