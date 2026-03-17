@@ -10,6 +10,7 @@ export function usePlayer() {
 	const [progress, setProgress] = useState(0);
 	const [duration, setDuration] = useState(0);
 	const [currentTime, setCurrentTime] = useState(0);
+	const [playbackRate, setPlaybackRate] = useState(1);
 
 	const handleTimeUpdate = () => {
 		const audio = audioRef.current;
@@ -20,6 +21,7 @@ export function usePlayer() {
 	};
 	const handleLoaded = () => {
 		setDuration(audioRef.current.duration);
+		audioRef.current.playbackRate = playbackRate;
 	};
 
 	useEffect(() => {
@@ -33,5 +35,5 @@ export function usePlayer() {
 			audio.removeEventListener("loadedmetadata", handleLoaded);
 		});
 	}, []);
-	return ({ audioRef, playing, setPlaying, progress, duration, currentTime });
+	return ({ audioRef, playing, setPlaying, progress, duration, currentTime, playbackRate, setPlaybackRate });
 }

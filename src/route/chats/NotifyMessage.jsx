@@ -14,13 +14,41 @@ function clickNotify(id, navigate, phone) {
 
 /**
  * @author VAMPETA
+ * @brief COMPONENTE QUE VERIFICA O TIPO DA MENSAGEM E RENDERIZA O ICONE CORRETO
+ * @param {String} type TIPO DA MENSAGEM
+*/
+function IconeChat({ type }) {
+	switch (type) {
+		case "audio":
+			return (<i className="bi bi-mic-fill mr-2 text-white" />);
+		case "image":
+			return (<i className="bi bi-image mr-2 text-white" />);
+		case "video":
+			return (<i className="bi bi-film mr-2 text-white" />);
+		case "contacts":
+			return (<i className="bi bi-person-vcard mr-2 text-white" />);
+		case "location":
+			return (<i className="bi bi-geo-alt-fill mr-2 text-red-500" />);
+		case "list":
+			return (<i className="bi bi-list-ul mr-2 text-white" />);
+		case "button":
+			return (<i className="bi bi-list-ul mr-2 text-white" />);
+		default:
+			return (null);
+	}
+}
+
+/**
+ * @author VAMPETA
  * @brief IDENTIFICA O TIPO DA MENSAGEM E RETORNA O TEXTO CORRETO
- * @param {Object} data 
+ * @param {Object} data CONTEUDO DA MENSAGEM
  */
 function textChat(data) {
 	switch (data.type) {
 		case "text":
 			return (data.text.body);
+		case "audio":
+			return ("Áudio");
 		case "image":
 			return ("Imagem");
 		case "video":
@@ -45,7 +73,10 @@ export function NotifyMessage({ navigate, t, newMessage }) {
 		<div className={`flex justify-between w-[80vw] rounded text-white bg-orange-500 ${t.visible ? "animate-toastIn" : "animate-toastOut"}`}>
 			<div className="flex flex-col w-[80%] h-full px-4 py-3 cursor-pointer" onClick={() => clickNotify(t.id, navigate, newMessage.phone)}>
 				<span>{newMessage.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</span>
-				<span className="truncate">{textChat(newMessage.data)}</span>
+				<span className="truncate">
+					<IconeChat type={newMessage.data.type} />
+					{textChat(newMessage.data)}
+				</span>
 			</div>
 			<button className="flex justify-center items-center w-[20%] cursor-pointer opacity-70 hover:opacity-100" onClick={() => toast.dismiss(t.id)}>
 				<i className="bi bi-x-square text-4xl"/>

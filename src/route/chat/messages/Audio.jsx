@@ -47,14 +47,35 @@ function handleSeek(e, audioRef) {
 
 /**
  * @author VAMPETA
+ * @brief FUNCAO RESPONSAVEL POR ALTERNAR CICLICAMENTE A VELOCIDADE DE REPRODUCAO DO AUDIO (1x → 1.5x → 2x → 1x)
+ * @param {Object} audioRef REFERENCIA DO ELEMENTO HTML <audio>
+ * @param {Number} playbackRate VELOCIDADE ATUAL DE REPRODUCAO DO AUDIO (EX: 1, 1.5, 2)
+ * @param {Function} setPlaybackRate FUNCAO RESPONSAVEL POR ATUALIZAR O ESTADO DA VELOCIDADE
+*/
+function toggleSpeed(audioRef, playbackRate, setPlaybackRate) {
+	if (!audioRef.current) return ;
+	let newRate;
+	if (playbackRate === 1) {
+		newRate = 1.5;
+	} else if (playbackRate === 1.5) {
+		newRate = 2;
+	} else {
+		newRate = 1;
+	}
+	audioRef.current.playbackRate = newRate;
+	setPlaybackRate(newRate);
+}
+
+/**
+ * @author VAMPETA
  * @brief MENSAGENS DE AUDIO DO CHAT
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 const Audio = memo(function Audio({ message }) {
-	const { audioRef, playing, setPlaying, progress, duration, currentTime } = usePlayer();
+	const { audioRef, playing, setPlaying, progress, duration, currentTime, playbackRate, setPlaybackRate } = usePlayer();
 
 	return (
-		<div className="flex items-center gap-3 bg-orange-500 rounded-xl p-3 w-[70vw]">
+		<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-[70vw]">
 			<audio ref={audioRef} src={(message.direction === "outbound") ? message.data.audio.link : message.data.audio.url} preload="metadata" />
 			<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8" onClick={() => togglePlay(audioRef, playing, setPlaying)}>
 				{(playing) ? (
@@ -71,9 +92,9 @@ const Audio = memo(function Audio({ message }) {
 					{`${formatTime(currentTime)}/${formatTime(duration)}`}
 				</div>
 			</div>
-			<div>
-				1x
-			</div>
+			<button className="w-12 h-10 bg-gray-400 text-white cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
+				{playbackRate}x
+			</button>
 		</div>
 	);
 });

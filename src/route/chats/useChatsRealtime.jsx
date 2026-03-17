@@ -13,6 +13,8 @@ function textChat(data) {
 	switch (data.type) {
 		case "text":
 			return (data.text.body);
+		case "audio":
+			return ("Áudio");
 		case "image":
 			return ("Imagem");
 		case "video":
@@ -45,7 +47,7 @@ function handleNewMessage(setChats, navigate) {
 				lastMessage: {
 					...chat.lastMessage,
 					humanViewed: false,
-					type: newMessage.type,
+					type: newMessage.data.type,
 					text: textChat(newMessage.data),
 					timestamp: newMessage.timestamp
 				}

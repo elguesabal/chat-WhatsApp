@@ -27,6 +27,7 @@ function Visualization({ status }) {
 	if (status === "sent") return (<i className="bi bi-check ml-2 leading-none text-xl text-gray-700"/>);
 	if (status === "delivered") return (<i className="bi bi-check-all ml-2 leading-none text-xl text-gray-700"/>);
 	if (status === "read") return (<i className="bi bi-check-all ml-2 leading-none text-xl text-blue-700"/>);
+	if (status === "played") return (<i className="bi bi-check-all ml-2 leading-none text-xl text-blue-700"/>);
 	if (status === "failed") return (<i className="bi bi-exclamation-triangle-fill ml-2 leading-none text-xl text-yellow-500"/>);
 	return (<i className="bi bi-x-circle-fill ml-2 leading-none text-xl text-red-500"/>);
 }
@@ -37,6 +38,21 @@ function Visualization({ status }) {
  * @param {Object} message DADOS DA MENSAGEM
 */
 export default function FooterMessage({ message }) {
+	if (message.data?.audio) {
+		return (
+			<div className="flex justify-between items-center">
+				{(message.data.audio.voice === true) ? (
+					<i class={`bi bi-mic-fill ${(message.status === "played") ? "text-blue-600" : "text-gray-700"}`} />
+				) : (
+					<i class="bi bi-music-note-beamed text-gray-700" />
+				)}
+				<div className="flex items-center justify-end mt-1">
+					<span className="text-xs text-gray-700">{formatDate(message.timestamp)}</span>
+					{message.status && <Visualization status={message.status} />}
+				</div>
+			</div>
+		);
+	}
 	return (
 		<div className="flex items-center justify-end mt-1">
 			<span className="text-xs text-gray-700">{formatDate(message.timestamp)}</span>
