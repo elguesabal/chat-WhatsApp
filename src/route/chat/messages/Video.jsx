@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { memo, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 /**
  * @author VAMPETA
@@ -20,7 +21,7 @@ function formattedText(text) {
 		parts.forEach((part, index) => {
 			if (typeof part !== "string") {
 				newParts.push(part);
-				return;
+				return ;
 			}
 			regex.lastIndex = 0;
 			let lastIndex = 0;
@@ -61,13 +62,21 @@ function formattedText(text) {
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 const Video = memo(function Video({ message }) {
+	const [videoError, setVideoError] = useState(false);
+	const { ref, inView } = useInView({ triggerOnce: true });
+	const src = (message.direction === "outbound") ? message.data.video.link : message.data.video.url;
+
 	return (
-		<div>
-			<div className="flex flex-col items-center p-20 bg-gray-300 rounded">
-				<i className="bi bi-wrench text-4xl" />
-				<p>Em produção</p>
-			</div>
-			<p>{formattedText(message.data.Video.caption)}</p>
+		<div ref={ref}>
+			{(!videoError && src && inView) ? (
+				<video className="w-full h-auto rounded" controls preload="metadata" playsInline src={src} onError={() => setVideoError(true)} />
+			) : (
+				<div className="flex flex-col items-center p-20 bg-gray-300 rounded">
+					<i className="bi bi-image text-4xl" />
+					<p>Vídeo não disponível</p>
+				</div>
+			)}
+			{message?.data?.video?.caption && <p>{formattedText(message.data.video.caption)}</p>}
 		</div>
 	);
 });

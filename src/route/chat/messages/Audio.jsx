@@ -1,5 +1,7 @@
 import { memo } from "react";
 
+import axios from "axios";
+
 import { usePlayer } from "./usePlayer.js";
 
 /**
@@ -53,7 +55,7 @@ function handleSeek(e, audioRef) {
  * @param {Function} setPlaybackRate FUNCAO RESPONSAVEL POR ATUALIZAR O ESTADO DA VELOCIDADE
 */
 function toggleSpeed(audioRef, playbackRate, setPlaybackRate) {
-	if (!audioRef.current) return ;
+	if (!audioRef.current) return;
 	let newRate;
 	if (playbackRate === 1) {
 		newRate = 1.5;
@@ -68,15 +70,25 @@ function toggleSpeed(audioRef, playbackRate, setPlaybackRate) {
 
 /**
  * @author VAMPETA
+ * @brief FUNCAO RESPONSAVEL POR FAZER O DOWNLOAD DO ARQUIVO E SALVAR
+ * @param {String} url LINK DE DOWNLOAD
+*/
+async function download(url) {
+	// AINDA NAO FEITO
+}
+
+/**
+ * @author VAMPETA
  * @brief MENSAGENS DE AUDIO DO CHAT
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 const Audio = memo(function Audio({ message }) {
 	const { audioRef, playing, setPlaying, progress, duration, currentTime, playbackRate, setPlaybackRate } = usePlayer();
+	const src = (message.direction === "outbound") ? message.data.audio.link : message.data.audio.url;
 
 	return (
 		<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-[70vw]">
-			<audio ref={audioRef} src={(message.direction === "outbound") ? message.data.audio.link : message.data.audio.url} preload="metadata" />
+			<audio ref={audioRef} src={src} preload="metadata" />
 			<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8" onClick={() => togglePlay(audioRef, playing, setPlaying)}>
 				{(playing) ? (
 					<i className="bi bi-pause-fill text-xl" />
@@ -95,6 +107,9 @@ const Audio = memo(function Audio({ message }) {
 			<button className="w-12 h-10 bg-gray-400 text-white cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
 				{playbackRate}x
 			</button>
+			{/* <button className="w-12 h-10 bg-gray-400 text-white cursor-pointer rounded" onClick={() => download(src)}>
+				<i className="bi bi-download text-xl" />
+			</button> */}
 		</div>
 	);
 });

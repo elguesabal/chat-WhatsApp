@@ -42,9 +42,9 @@ export default function FooterMessage({ message }) {
 		return (
 			<div className="flex justify-between items-center">
 				{(message.data.audio.voice === true) ? (
-					<i class={`bi bi-mic-fill ${(message.status === "played") ? "text-blue-600" : "text-gray-700"}`} />
+					<i className={`bi bi-mic-fill ${(message.status === "played") ? "text-blue-600" : "text-gray-700"}`} />
 				) : (
-					<i class="bi bi-music-note-beamed text-gray-700" />
+					<i className="bi bi-music-note-beamed text-gray-700" />
 				)}
 				<div className="flex items-center justify-end mt-1">
 					<span className="text-xs text-gray-700">{formatDate(message.timestamp)}</span>

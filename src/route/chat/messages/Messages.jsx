@@ -30,7 +30,7 @@ function Message({ message }) {
 			return (<Audio message={message} />);
 		case "image":
 			return (<Image message={message} />);
-		case "Video":
+		case "video":
 			return (<Video message={message} />);
 		case "location":
 			return (<Location message={message} />);
