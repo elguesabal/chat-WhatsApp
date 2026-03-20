@@ -16,13 +16,15 @@ function textChat(data) {
 		case "audio":
 			return ("Áudio");
 		case "image":
-			return ("Imagem");
+			return ((data.image.caption) ? data.image.caption : "Imagem");
 		case "video":
-			return ("Vídeo");
+			return ((data.video.caption) ? data.video.caption : "Vídeo");
 		case "location":
 			return ((data.location.name) ? data.location.name : "Localização");
 		case "contacts":
 			return (data.contacts[0].name.formatted_name);
+		case "document":
+			return ((data.document.filename) ? data.document.filename : "Documento");
 		default:
 			return (null);
 	}

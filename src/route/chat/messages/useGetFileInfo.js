@@ -43,7 +43,7 @@ function formatFileSize(bytes) {
 */
 function formatFileType(type) {
 	if (!type) return ("file");
-	if (type.includes("image")) return ("Image");
+	if (type.includes("image")) return ("Imagem");
 	if (type.includes("audio")) return ("Áudio");
 	if (type.includes("video")) return ("Vídeo");
 	if (type.includes("pdf")) return ("pdf");
@@ -60,7 +60,7 @@ export function useGetFileInfo(url) {
 	const [info, setInfo] = useState({ size: null, type: null });
 
 	useEffect(() => {
-		if (!url) return;
+		if (!url) return ;
 		let isMounted = true;
 		async function getInfo() {
 			const res = await getFileInfo(url);

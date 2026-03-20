@@ -25,10 +25,12 @@ function IconeChat({ type }) {
 			return (<i className="bi bi-image mr-2 text-white" />);
 		case "video":
 			return (<i className="bi bi-film mr-2 text-white" />);
+		case "location":
+			return (<i className="bi bi-geo-alt-fill mr-2 text-white" />);
 		case "contacts":
 			return (<i className="bi bi-person-vcard mr-2 text-white" />);
-		case "location":
-			return (<i className="bi bi-geo-alt-fill mr-2 text-red-500" />);
+		case "document":
+			return (<i className="bi bi-file-earmark-text mr-2 text-white" />);
 		case "list":
 			return (<i className="bi bi-list-ul mr-2 text-white" />);
 		case "button":
@@ -50,13 +52,15 @@ function textChat(data) {
 		case "audio":
 			return ("Áudio");
 		case "image":
-			return ("Imagem");
+			return ((data.image.caption) ? data.image.caption : "Imagem");
 		case "video":
-			return ("Vídeo");
+			return ((data.video.caption) ? data.video.caption : "Vídeo");
 		case "location":
 			return ((data.location.name) ? data.location.name : "Localização");
 		case "contacts":
 			return (data.contacts[0].name.formatted_name);
+		case "document":
+			return ((data.document.filename) ? data.document.filename : "Documento");
 		default:
 			return (null);
 	}

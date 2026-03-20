@@ -10,6 +10,7 @@ import Error from "../../../screens/Error.jsx";
 import FooterMessage from "./FooterMessage.jsx";
 import Context from "./context/Context.jsx";
 import Text from "./Text.jsx";
+import Sticker from "./Sticker.jsx";
 import Audio from "./Audio.jsx";
 import Image from "./Image.jsx";
 import Video from "./Video.jsx";
@@ -24,9 +25,11 @@ import Document from "./document.jsx";
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 function Message({ message }) {
-	switch (message.data.type) {
+	switch (message.data?.type) {
 		case "text":
 			return (<Text message={message} />);
+		case "sticker":
+			return (<Sticker message={message} />);
 		case "audio":
 			return (<Audio message={message} />);
 		case "image":
@@ -40,7 +43,7 @@ function Message({ message }) {
 		case "document":
 			return (<Document message={message} />);
 		default:
-			return (<p className="text-red-900"><i>Mensagem do tipo <b>{message.data.type}</b> não suportada</i></p>);
+			return (<p className="text-red-900"><i>Mensagem do tipo <b>{(message.data?.type) ? message.data?.type : "desconhecida"}</b> não suportada</i></p>);
 	}
 }
 

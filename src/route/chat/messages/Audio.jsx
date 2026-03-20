@@ -2,6 +2,8 @@ import { memo } from "react";
 
 import { usePlayer } from "./usePlayer.js";
 
+import { download } from "../../../utils/download.js";
+
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE FORMATA O TEMPO DO AUDIO
@@ -68,16 +70,6 @@ function toggleSpeed(audioRef, playbackRate, setPlaybackRate) {
 
 /**
  * @author VAMPETA
- * @brief FUNCAO RESPONSAVEL POR FAZER O DOWNLOAD DO ARQUIVO E SALVAR
- * @param {String} url LINK DE DOWNLOAD
-*/
-async function download(url) {
-	// AINDA NAO FEITO
-	alert("ainda tenho que terminar isso");
-}
-
-/**
- * @author VAMPETA
  * @brief MENSAGENS DE AUDIO DO CHAT
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
@@ -106,7 +98,7 @@ const Audio = memo(function Audio({ message }) {
 			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
 				{playbackRate}x
 			</button>
-			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => download(src)}>
+			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => download(src, "audio.mp3")}>
 				<i className="bi bi-download text-xl" />
 			</button>
 		</div>
