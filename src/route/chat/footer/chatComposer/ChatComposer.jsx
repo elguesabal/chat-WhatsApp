@@ -61,11 +61,11 @@ export default function ChatComposer({ socket }) {
 
 	return (
 		<>
-			<div className="flex items-center gap-2 px-3 py-2 bg-gray-900">
+			<div className="flex items-center gap-2 px-3 py-2 border-zinc-800 border-t border-b">
 				<button className="text-gray-400 hover:text-white text-xl cursor-pointer" onClick={() => setOptions((prev) => !prev)}>
 					<i className="bi bi-three-dots" />
 				</button>
-				<div className="flex-1 bg-gray-700 rounded-3xl px-4 py-2 flex items-end">
+				<div className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2 flex items-end">
 					<textarea ref={textareaRef} rows={1} value={message} onChange={(element) => handleInput(setMessage, element.target.value, textareaRef)} onKeyDown={(element) => handleKeyDown(phone, element, socket, message, setMessage, textareaRef)} placeholder="Digite uma mensagem" className="w-full bg-transparent resize-none outline-none text-white placeholder-gray-400 max-h-40 overflow-y-auto" />
 				</div>
 				<button onClick={() => sendText(socket, phone, message, setMessage, textareaRef)} className={`flex items-center justify-center h-10 w-10 bg-orange-500 transition-colors text-white rounded-full ${(message) ? "cursor-pointer hover:bg-orange-400" : ""}`}>

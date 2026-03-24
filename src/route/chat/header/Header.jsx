@@ -13,13 +13,10 @@ export default function Header({ socket }) {
 	const { stateBot, setStateBot } = useStateBot(socket, phone);
 
 	return (
-		<div className="flex items-center justify-around h-14 bg-gray-900 shrink-0">
-			<i className="bi bi-arrow-left cursor-pointer text-4xl text-orange-500" onClick={() => navigate(-1)} />
-			<div className="flex items-center">
-				<img src="/logo.png" className="w-8 h-8 object-contain" />
-				<span className="text-white">{phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')}</span>
-			</div>
-			{stateBot !== null && <i className={`bi bi-robot cursor-pointer text-4xl ${(stateBot) ? "text-orange-500" : "text-gray-500"}`} onClick={() => botOnOff(socket, phone, setStateBot, !stateBot)} />}
-		</div>
+		<header className="flex justify-around items-center px-4 md:px-6 py-4 border-b border-zinc-800">
+	 		<i className="bi bi-arrow-left cursor-pointer text-4xl text-orange-500" onClick={() => navigate(-1)} />
+			<h1 className="text-lg md:text-xl font-semibold text-orange-500">{phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')}</h1>
+	 		{stateBot !== null && <i className={`bi bi-robot cursor-pointer text-4xl ${(stateBot) ? "text-orange-500" : "text-gray-500"}`} onClick={() => botOnOff(socket, phone, setStateBot, !stateBot)} />}
+		</header>
 	);
 }

@@ -8,7 +8,7 @@ import ChatComposer from "./chatComposer/ChatComposer.jsx";
 */
 function OutsideResponseWindow() {
 	return (
-		<div className="flex items-center justify-center h-14 bg-gray-800 shrink-0">
+		<div className="flex items-center justify-center h-14 border-zinc-800 border-t shrink-0">
 			<p className="text-red-500">Fora da janela de 24 horas</p>
 		</div>
 	);

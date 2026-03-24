@@ -26,7 +26,7 @@ function ProtectedRoute({ children }) {
 	const idPhone = Cookies.get("idPhone");
 	const token = Cookies.get("token");
 
-	if (!phone || !idPhone || !token) return (<Navigate to="/login" replace />);
+	if (!phone || !idPhone || !token) return (<Navigate to="/" replace />);
 	return (children);
 }
 
@@ -39,7 +39,7 @@ createRoot(document.getElementById("root")).render(
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
-						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 						<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
 						<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 						<Route path="*" element={<NotFound />} />
