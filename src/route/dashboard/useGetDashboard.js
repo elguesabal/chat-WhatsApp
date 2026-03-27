@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 export function useGetDashboard(socket, date) {
 	const [info, setInfo] = useState({ received: {}, sent: {}, newContacts: 0 });
 	const [loading, setLoading] = useState(true);
-console.log(date)
+
 	useEffect(() => {
 		if (!socket) return ;
 		setLoading(true);

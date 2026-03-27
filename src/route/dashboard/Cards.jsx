@@ -30,7 +30,7 @@ function Card({ loading, text, value }) {
  * @brief CARDS DO DASHBOARD
 */
 export default function Cards({ socket }) {
-	const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+	const [date, setDate] = useState(new Date().toLocaleDateString("sv-SE"));
 	const { info, loading } = useGetDashboard(socket, date);
 	const messagesReceived = Object.values(info?.received || {}).reduce((acc, v) => acc + (v || 0), 0);
 	const messagesSent = Object.values(info?.sent || {}).reduce((acc, v) => acc + (v || 0), 0);
@@ -42,6 +42,7 @@ export default function Cards({ socket }) {
 				<Card loading={loading} text="Mensagens recebidas hoje" value={messagesReceived} />
 				<Card loading={loading} text="Mensagens enviadas" value={messagesSent} />
 				<Card loading={loading} text="Novos contatos" value={info?.newContacts} />
+				<Card loading={loading} text="Redirecionamentos" value={info?.redirects} />
 			</div>
 			<div className="bg-zinc-900 p-5 md:p-6 rounded-xl border border-zinc-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 				<div>
@@ -57,7 +58,7 @@ export default function Cards({ socket }) {
 					<h2 className="text-sm md:text-base font-semibold text-zinc-200 whitespace-nowrap">Mensagens recebidas hoje</h2>
 					<div className="flex-1 h-px bg-zinc-800" />
 				</div>
-				<div className="grid grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+				<div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
 					<Card loading={loading} text="Texto" value={info.received?.text} />
 					<Card loading={loading} text="Figurinha" value={info.received?.sticker} />
 					<Card loading={loading} text="Áudio" value={info.received?.audio} />
@@ -73,7 +74,7 @@ export default function Cards({ socket }) {
 					<h2 className="text-sm md:text-base font-semibold text-zinc-200 whitespace-nowrap">Mensagens enviadas hoje</h2>
 					<div className="flex-1 h-px bg-zinc-800" />
 				</div>
-				<div className="grid grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+				<div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
 					<Card loading={loading} text="Texto" value={info.sent?.text} />
 					<Card loading={loading} text="Figurinha" value={info.sent?.sticker} />
 					<Card loading={loading} text="Áudio" value={info.sent?.audio} />
