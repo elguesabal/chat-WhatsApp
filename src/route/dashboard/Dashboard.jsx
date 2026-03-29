@@ -2,11 +2,10 @@ import { useState } from "react";
 
 import { useSocket } from "../../socket/useSocket.js";
 
-import SideBar from "../../utils/components/Sidebar.jsx";
-import Cards from "./Cards.jsx";
+import { SideBar, Header } from "../../utils/components/Sidebar.jsx";
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
-import Header from "./Header.jsx";
+import Body from "./Body.jsx";
 
 /**
  * @author VAMPETA
@@ -21,9 +20,9 @@ export default function Dashboard() {
 		<div className="flex h-dvh bg-black text-white">
 			<SideBar open={open} setOpen={setOpen} />
 			<main className="flex-1 flex flex-col">
-				<Header setOpen={setOpen} />
+				<Header setOpen={setOpen} title="Dashboard" />
 				{!connected && !error && <Load />}
-				{connected && <Cards socket={socket} />}
+				{connected && <Body socket={socket} />}
 				{error && <Error />}
 			</main>
 		</div>

@@ -72,7 +72,7 @@ function TypeMessage({ type }) {
  * @brief PAGINA DE CONVERSAS
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-export default function Contact({ socket }) {
+export default function Body({ socket }) {
 	const { chats, setChats, error, loadMore, hasMore, loadingMore } = useLoadChats(socket);
 	const { containerRef, handleScroll } = useScroll({ hasMore, loadingMore, loadMore });
 

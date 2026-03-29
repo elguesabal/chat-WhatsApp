@@ -74,7 +74,7 @@ function SidebarContent({ navigate, close }) {
  * @param {Object} navigate FUNCAO DE NAVEGACAO DE PAGINA
  * @param {Object} close FUNCAO QUE FECHA O Sidebar
 */
-export default function SideBar({ open, setOpen }) {
+export function SideBar({ open, setOpen }) {
 	const navigate = useNavigate();
 
 	return (
@@ -91,5 +91,22 @@ export default function SideBar({ open, setOpen }) {
 				</div>
 			)}
 		</>
+	);
+}
+
+/**
+ * @author VAMPETA
+ * @brief HEADER QUE ACOMPANHA O Sidebar
+ * @param {Object} setOpen CONTROLA SE O Sidebar ESTA ABERTO OU FECHADO
+ * @param {String} titile TITULO A SER EXIBIDO NO CABECALHO
+*/
+export function Header({ setOpen, title }) {
+	return (
+		<header className="flex justify-between items-center px-4 md:px-6 py-4 border-b border-zinc-800">
+			<button className="md:hidden" onClick={() => setOpen(true)}>
+				<i className="bi bi-list text-3xl" />
+			</button>
+			<h1 className="text-lg md:text-xl font-semibold">{title}</h1>
+		</header>
 	);
 }

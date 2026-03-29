@@ -2,12 +2,15 @@ import { useState } from "react";
 
 import { useSocket } from "../../socket/useSocket.js";
 
-import SideBar from "../../utils/components/Sidebar.jsx";
+import { SideBar, Header } from "../../utils/components/Sidebar.jsx";
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
-// import Header from "./Header.jsx";
+import Body from "./body.jsx";
 
-
+/**
+ * @author VAMPETA
+ * @brief PAGINA DE CONTATOS
+*/
 export default function Contacts() {
 	const [open, setOpen] = useState(false);
 	const { socket, connected, error } = useSocket();
@@ -17,9 +20,9 @@ export default function Contacts() {
 		<div className="flex h-dvh bg-black text-white">
 			<SideBar open={open} setOpen={setOpen} />
 			<main className="flex-1 flex flex-col">
-				{/* <Header setOpen={setOpen} /> */}
+				<Header setOpen={setOpen} title="Contatos" />
 				{!connected && !error && <Load />}
-				<>Página de contatos</>
+				{connected && <Body socket={socket} />}
 				{error && <Error />}
 			</main>
 		</div>

@@ -2,11 +2,10 @@ import { useState } from "react";
 
 import { useSocket } from "../../socket/useSocket.js";
 
-import SideBar from "../../utils/components/Sidebar.jsx";
+import { SideBar, Header } from "../../utils/components/Sidebar.jsx";
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
-import Header from "./Header.jsx";
-import Contact from "./Contact.jsx";
+import Body from "./Body.jsx";
 
 /**
  * @author VAMPETA
@@ -21,9 +20,9 @@ export default function Chats() {
 		<div className="flex h-dvh bg-black text-white">
 			<SideBar open={open} setOpen={setOpen} />
 			<div className="flex flex-1 flex-col overflow-hidden">
-				<Header setOpen={setOpen} />
+				<Header setOpen={setOpen} title="Conversas" />
 				{!connected && !error && <Load />}
-				{connected && <Contact socket={socket} />}
+				{connected && <Body socket={socket} />}
 				{error && <Error />}
 			</div>
 		</div>

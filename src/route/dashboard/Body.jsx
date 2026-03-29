@@ -18,7 +18,7 @@ function Card({ loading, text, value }) {
 			{!loading && (
 				<div>
 					<p className="text-xs md:text-sm text-zinc-400">{text}</p>
-					<h2 className="text-xl md:text-2xl font-bold mt-2">{value || 0}</h2>
+					<h2 className={`text-xl md:text-2xl font-bold mt-2 ${value && "text-orange-500"}`}>{value || 0}</h2>
 				</div>
 			)}
 		</div>
@@ -27,9 +27,9 @@ function Card({ loading, text, value }) {
 
 /**
  * @author VAMPETA
- * @brief CARDS DO DASHBOARD
+ * @brief BODY DA ROTA /dashboard
 */
-export default function Cards({ socket }) {
+export default function Body({ socket }) {
 	const [date, setDate] = useState(new Date().toLocaleDateString("sv-SE"));
 	const { info, loading } = useGetDashboard(socket, date);
 	const messagesReceived = Object.values(info?.received || {}).reduce((acc, v) => acc + (v || 0), 0);
