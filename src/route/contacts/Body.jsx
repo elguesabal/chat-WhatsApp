@@ -13,7 +13,7 @@ import ContactDrawer from "./ContactDrawer.jsx";
  */
 function ContactCard({ contact, onClick }) {
 	return (
-		<div className="group bg-zinc-900 border border-zinc-800 rounded-xl p-4 hover:bg-orange-500 transition cursor-pointer" onClick={onClick}>
+		<div className="group bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:bg-orange-500 transition cursor-pointer" onClick={onClick}>
 			<p className="font-semibold truncate">{contact.name || "Sem nome"}</p>
 			<span className="text-xs text-zinc-500">{contact.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')}</span>
 		</div>

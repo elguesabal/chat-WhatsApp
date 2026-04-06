@@ -15,6 +15,7 @@ import Dashboard from "./route/dashboard/Dashboard.jsx";
 import Chats from "./route/chats/Chats.jsx";
 import Chat from "./route/chat/Chat.jsx";
 import Contacts from "./route/contacts/Contacts.jsx";
+import Spreadsheets from "./route/spreadsheets/Spreadsheets.jsx";
 import Settings from "./route/settings/Settings.jsx";
 import NotFound from "./route/NotFound/NotFound.jsx";
 
@@ -45,6 +46,7 @@ createRoot(document.getElementById("root")).render(
 						<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
 						<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 						<Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
+						<Route path="/spreadsheets" element={<ProtectedRoute><Spreadsheets /></ProtectedRoute>} />
 						<Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>

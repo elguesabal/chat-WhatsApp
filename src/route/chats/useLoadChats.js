@@ -15,10 +15,7 @@ export function useLoadChats(socket) {
 	useEffect(() => {
 		if (!socket) return ;
 		socket.emit("chats:load_chats", {}, (res) => {
-			if (!res || res.error) {
-				setError(true);
-				return ;
-			}
+			if (!res || res.error) return (setError(true));
 			setChats(res.chats);
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;
