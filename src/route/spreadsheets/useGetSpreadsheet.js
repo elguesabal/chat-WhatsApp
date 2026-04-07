@@ -24,9 +24,14 @@ export function useGetSpreadsheet(socket) {
  * @author VAMPETA
  * @brief FUNCAO QUE ATUALIZA QUAIS PLANILHAS ESTAO SENDO USADAS
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {Object} spreadsheets VARIAVEL QUE CONTEM AS PLANILHAS DISPONIVEIS E QUAIS ESTAO EM USO
  * @param {Object} setSpreadsheets FUNCAO DE CONTROLE DA VARIAVEL spreadsheets
  * @param {Number} index POSICAO DO COMPONENTE QUE SERA ATUALIZADO
 */
-export function selectSpreadsheet(socket, setSpreadsheets, index) {
-	setSpreadsheets((prev) => (prev.map((item, i) => ((i === index) ? { ...item, selected: !item.selected } : item))));
+export function selectSpreadsheet(socket, spreadsheets, setSpreadsheets, index) {
+	const spreadsheet = spreadsheets[index];
+
+	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.selected ? "add" : "remove"]: spreadsheet.page }, (res) => {
+		if (res === 200) setSpreadsheets((prev) => prev.map((item, i) => ((i === index) ? { ...item, selected: !spreadsheet.selected } : item)));
+	});
 }

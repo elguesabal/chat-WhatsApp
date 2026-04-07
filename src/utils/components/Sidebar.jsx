@@ -4,21 +4,21 @@ import { logout } from "../functions/logout.js";
 
 /**
  * @author VAMPETA
- * @brief HEADER DA ROTA /dashboard
- * @param {Object} navigate 
- * @param {Object} close 
+ * @brief COMPONENTE QUE EXIBE O MENU DE OPCOES NA LATERAL DAS PAGINAS PRINCIPAIS
+ * @param {Object} navigate FUNCAO DE NAVEGACAO DO REACT
+ * @param {Object} close FUNCAO DE FECHAMENTO DO MENU
 */
 function SidebarContent({ navigate, close }) {
 	const location = useLocation();
 
 	return (
-		<>
-			<div>
+		<div className="flex flex-col h-full">
+			<div className="flex flex-col flex-1 min-h-0">
 				<div className="flex gap-2 p-6 text-2xl font-bold text-orange-500">
 					<img src="/logo.png" className="w-8 h-8 object-contain animate-spin [animation-duration:5s]" />
 					<span>Agora Digital</span>
 				</div>
-				<nav className="flex flex-col gap-2 px-4">
+				<nav className="flex flex-col flex-1 overflow-y-auto gap-2 px-4">
 					<Link className={`flex items-center gap-1 px-4 py-2 rounded-lg ${(location.pathname === "/dashboard") ? "bg-orange-500 text-black" : "hover:bg-zinc-800"}`} to="/dashboard" onClick={close}>
 						<i className="bi bi-clipboard-data text-xl" />
 						<span>Dashboard</span>
@@ -72,7 +72,7 @@ function SidebarContent({ navigate, close }) {
 					Logout
 				</button>
 			</div>
-		</>
+		</div>
 	);
 }
 
@@ -87,17 +87,12 @@ export function SideBar({ open, setOpen }) {
 
 	return (
 		<>
-			<aside className="hidden md:flex w-64 bg-zinc-900 border-r border-zinc-800 flex-col justify-between">
-				<SidebarContent navigate={navigate} />
-			</aside>
-			{open && (
-				<div className="fixed inset-0 z-50 flex">
-					<div className="absolute inset-0 bg-black/60" onClick={() => setOpen(false)} />
-					<aside className="relative w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col justify-between animate-slideInLeft">
-						<SidebarContent navigate={navigate} close={() => setOpen(false)} />
-					</aside>
+			{open && <div className="fixed inset-0 bg-black/60 z-40 md:hidden" onClick={() => setOpen(false)} />}
+			<aside className={`fixed md:static top-0 left-0 z-50 w-64 h-full bg-zinc-900 border-r border-zinc-800 transform transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`} >
+				<div className="flex flex-col h-full">
+					<SidebarContent navigate={navigate} close={() => setOpen(false)} />
 				</div>
-			)}
+			</aside>
 		</>
 	);
 }
