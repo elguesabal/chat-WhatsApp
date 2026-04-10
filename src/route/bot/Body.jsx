@@ -5,8 +5,14 @@ import { useGetInfoBot } from "./useGetInfoBot.js";
 import Error from "../../screens/Error.jsx";
 import Load from "../../screens/Load.jsx";
 import StatusBot from "./StatusBot.jsx";
+import Explanation from "./Explanation.jsx";
 import Prompt from "./Prompt.jsx";
 import PromptSuggestion from "./PromptSuggestion.jsx";
+import MessageNotSupported from "./MessageNotSupported.jsx";
+import Location from "./Location.jsx";
+import NewContact from "./NewContact.jsx";
+import Redirect from "./Redirect.jsx";
+import OpeningHours from "./OpeningHours.jsx";
 
 /**
  * @author VAMPETA
@@ -21,20 +27,14 @@ const Body = memo(function Body({ socket }) {
 	return (
 		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
 			<StatusBot socket={socket} bot={bot} setBot={setBot} />
-			<Prompt socket={socket} bot={bot} />
-
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-5 flex flex-col gap-3">
-				<h2 className="text-lg font-semibold">Como usar</h2>
-
-				<ul className="text-sm text-zinc-400 flex flex-col gap-2 list-disc pl-5">
-					<li>Ative o bot para permitir respostas automáticas.</li>
-					<li>Configure o prompt para definir o comportamento da IA.</li>
-					<li>Utilize planilhas com preços para melhorar a precisão.</li>
-					<li>A IA responderá automaticamente mensagens no WhatsApp.</li>
-				</ul>
-			</div>
-
-			<PromptSuggestion socket={socket} />
+			<Explanation />
+			<Prompt socket={socket} bot={bot} setBot={setBot} />
+			<PromptSuggestion socket={socket} bot={bot} />
+			<MessageNotSupported socket={socket} bot={bot} />
+			<Location />
+			<NewContact />
+			<Redirect />
+			<OpeningHours />
 		</div>
 	);
 });

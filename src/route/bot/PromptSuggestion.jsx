@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 /**
  * @author VAMPETA
@@ -7,38 +7,57 @@ import { useState } from "react";
  * @param {String} prompt PROMPT ATUAL DO BOT QUE ALIMENTA A IA EM CADA RESPOSTA DE WHATSAPP
  * @param {String} input PROMPT EXPLICATIVO QUE SERA ENVIADO PARA A IA
  * @param {Object} setOutput FUNCAO QUE VAI SALVAR NA VARIAVEL QUE EXIBE A RESPOSTA DO BACK END
+ * @param {Object} setThink FUNCAO QUE MODIFICA A VARIAVEL think
 */
-function handleImprove(socket, prompt, input, setOutput) {
+function handleImprove(socket, prompt, input, setOutput, setThink) {
 	if (!input.trim()) return ;
-	setOutput(`Melhoria sugerida:\n\n${input} com instruções mais claras, contexto e objetivo definido.`);
-
-	socket.emit("bot:prompt_suggestion", {}, (res) => {
-		console.log(res)
+	setThink(true);
+	setOutput("");
+	socket.emit("bot:prompt_suggestion", { prompt, input }, (res) => {
+		setThink(false);
+		if (!res || res.error) return ;
+		setOutput(res);
 	});
+}
+
+/**
+ * @author VAMPETA
+ * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DO TEXTAREA AO RECEBER UM INPUT
+ * @param {String} value VALOR DO TEXTAREA
+ * @param {Object} setInput FUNCAO QUE CONTROLA O VALOR DENTRO DO INPUT
+ * @param {Object} textareaRef REFERENCIA DO TEXTAREA
+*/
+function handleChange(value, setInput, textareaRef) {
+	setInput(value);
+	textareaRef.current.style.height = "auto";
+	textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
 }
 
 /**
  * @author VAMPETA
  * @brief COMPONENTE DE MELHORIA DE PROMPT COM IA
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {Object} bot INFORMACOES DO BOT
 */
-export default function PromptSuggestion({ socket }) {
+export default function PromptSuggestion({ socket, bot }) {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
+	const [think, setThink] = useState(false);
+	const textareaRef = useRef(null);
 
 	return (
-		<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex flex-col gap-3 h-[320px]">
-			{/* OUTPUT */}
-			<div className="bg-zinc-800 border border-zinc-700 rounded p-2 text-sm text-zinc-300 h-[120px] overflow-y-auto whitespace-pre-wrap">
-				{output || "A sugestão aparecerá aqui..."}
+		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+			<div className={`flex flex-col flex-1 min-h-[40vh] bg-zinc-800 border border-zinc-700 rounded p-2 text-sm text-zinc-300 whitespace-pre-wrap ${(think) ? "animate-pulse" : ""}`}>
+				{output || (
+					<div className="flex flex-col justify-center items-center h-full gap-3">
+						{(think) ? (<p>Pensando...</p>) : (<p>A sugestão aparecerá aqui...</p>)}
+						<i className="bi bi-stars text-4xl" />
+					</div>
+				)}
 			</div>
-
-			{/* INPUT */}
-			<textarea className="bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none h-[100px] resize-none" value={input} placeholder="Digite seu prompt..." onChange={(e) => setInput(e.target.value)} />
-
-			{/* BOTÃO */}
-			<button className="bg-orange-500 text-black rounded p-2 text-sm w-full cursor-pointer" onClick={() => handleImprove(socket, null, input, setOutput)}>
-				Melhorar prompt
+			<textarea className="bg-zinc-800 border border-zinc-700 rounded p-2 text-sm min-h-[20vh] outline-none resize-none overflow-hidden" ref={textareaRef} value={input} placeholder="Digite seu prompt..." onChange={(element) => handleChange(element.target.value, setInput, textareaRef)} />
+			<button className="bg-orange-500 text-black rounded p-2 text-sm w-full hover:bg-orange-400 transition cursor-pointer" onClick={() => handleImprove(socket, bot.prompt, input, setOutput, setThink)}>
+				Enviar
 			</button>
 		</div>
 	);
