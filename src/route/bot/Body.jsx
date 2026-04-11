@@ -31,7 +31,7 @@ const Body = memo(function Body({ socket }) {
 			<Prompt socket={socket} bot={bot} setBot={setBot} />
 			<PromptSuggestion socket={socket} bot={bot} />
 			<MessageNotSupported socket={socket} bot={bot} />
-			<Location />
+			<Location socket={socket} bot={bot} />
 			<NewContact />
 			<Redirect />
 			<OpeningHours />

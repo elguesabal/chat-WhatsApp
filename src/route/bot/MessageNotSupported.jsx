@@ -8,7 +8,7 @@ import { useState } from "react";
 */
 export function handleSave(socket, input) {
 	if (!input) return ;
-	socket.emit("bot:update_message_not_supported", { newMessage: input }, (res) => {
+	socket.emit("bot:update_message_not_supported", { message: input }, (res) => {
 		if (res !== 204) return ;
 	});
 }

@@ -15,9 +15,14 @@ import Dashboard from "./route/dashboard/Dashboard.jsx";
 import Chats from "./route/chats/Chats.jsx";
 import Chat from "./route/chat/Chat.jsx";
 import Contacts from "./route/contacts/Contacts.jsx";
+import QuickMessages from "./route/quick messages/QuickMessages.jsx";
 import Bot from "./route/bot/Bot.jsx";
 import Spreadsheets from "./route/spreadsheets/Spreadsheets.jsx";
 import Settings from "./route/settings/Settings.jsx";
+import Guide from "./route/guide/Guide.jsx";
+import TermsOfUSe from "./route/terms of use/TermsOfUse.jsx";
+import PrivacyPolicy from "./route/privacy policy/PrivacyPolicy.jsx";
+import Support from "./route/support/Support.jsx";
 import NotFound from "./route/NotFound/NotFound.jsx";
 
 /**
@@ -47,9 +52,14 @@ createRoot(document.getElementById("root")).render(
 						<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
 						<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 						<Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
+						<Route path="/quick-messages" element={<ProtectedRoute><QuickMessages /></ProtectedRoute>} />
 						<Route path="/bot" element={<ProtectedRoute><Bot /></ProtectedRoute>} />
 						<Route path="/spreadsheets" element={<ProtectedRoute><Spreadsheets /></ProtectedRoute>} />
 						<Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+						<Route path="/guide" element={<ProtectedRoute><Guide /></ProtectedRoute>} />
+						<Route path="/terms-of-use" element={<ProtectedRoute><TermsOfUSe /></ProtectedRoute>} />
+						<Route path="/privacy-policy" element={<ProtectedRoute><PrivacyPolicy /></ProtectedRoute>} />
+						<Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</SocketProvider>
