@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState } from "react";
 
 import { useGetContacts } from "./useGetContacts.js";
 
@@ -25,7 +25,7 @@ function ContactCard({ contact, onClick }) {
  * @brief PAGINA DE CONTATOS
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-const Body = memo(function Body({ socket }) {
+export default function Body({ socket }) {
 	const { contacts, loading, error } = useGetContacts(socket);
 	const [selected, setSelected] = useState(null);
 	const [search, setSearch] = useState("");
@@ -44,6 +44,4 @@ const Body = memo(function Body({ socket }) {
 			{selected && <ContactDrawer socket={socket} contact={selected} setContact={setSelected} onClose={() => setSelected(null)} />}
 		</>
 	);
-});
-
-export default Body;
+};

@@ -19,6 +19,8 @@ export function handleSave(socket, input) {
 /**
  * @author VAMPETA
  * @brief COMPONENTE PARA SALVAR MENSAGEM DE LOCALIZACAO
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {Object} bot INFORMACOES DO BOT
 */
 export default function Location({ socket, bot }) {
 	const [input, setInput] = useState(bot.location || {});

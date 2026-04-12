@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief ATUALIZA O STATUS SE O BOT ESTA ATIVADO
@@ -6,10 +10,12 @@
  * @param {Object} setBot FUNCAO DE CONTROLE DA VARIAVEL bot
 */
 function updateStatusBot(socket, bot, setBot) {
-	const nextStatus = !bot.activated;
-
-	socket.emit("bot:update_status_bot", { status: nextStatus }, (res) => {
+	socket.emit("bot:update_status_bot", { status: !bot.activated }, (res) => {
 		if ("status" in res) setBot((prev) => ({ ...prev, activated: res.status }));
+// console.log(res)
+		// if (res !== 204) return (toast.error("Erro ao salvar!"));
+		// setBot((prev) => ({ ...prev, activated: !bot.activated }));
+		toast.success("Salvo com sucesso!");
 	});
 }
 
@@ -21,6 +27,8 @@ function updateStatusBot(socket, bot, setBot) {
  * @param {Object} setBot FUNCAO DE CONTROLE DA VARIAVEL bot
 */
 export default function StatusBot({ socket, bot, setBot }) {
+	// const [status, setStattus] = useState(bot.activated);		// REFATORAR E COMECAR A USAR
+
 	return (
 		<div className=" flex items-center justify-between bg-zinc-900 border border-zinc-800 rounded-lg p-5">
 			<div>

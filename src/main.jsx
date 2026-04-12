@@ -42,7 +42,10 @@ function ProtectedRoute({ children }) {
 createRoot(document.getElementById("root")).render(
 	// <StrictMode>
 		<>
-			<Toaster position="top-center" />
+			<Toaster position="top-center" toastOptions={{ className: "!bg-zinc-900 !text-white !border !border-zinc-800 !shadow-lg !rounded-lg !px-4 !py-3",
+				success: { className: "!bg-zinc-900 !text-white !border !border-green-500/40 !shadow-lg" },
+				error: { className: "!bg-zinc-900 !text-white !border !border-red-500/40 !shadow-lg" }
+			}} />
 			<BrowserRouter>
 				<SocketProvider>
 					<Routes>

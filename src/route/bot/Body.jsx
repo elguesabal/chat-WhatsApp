@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { useGetInfoBot } from "./useGetInfoBot.js";
 
 import Error from "../../screens/Error.jsx";
@@ -10,7 +8,7 @@ import Prompt from "./Prompt.jsx";
 import PromptSuggestion from "./PromptSuggestion.jsx";
 import MessageNotSupported from "./MessageNotSupported.jsx";
 import Location from "./Location.jsx";
-import NewContact from "./NewContact.jsx";
+import MessageNewContact from "./MessageNewContact.jsx";
 import Redirect from "./Redirect.jsx";
 import OpeningHours from "./OpeningHours.jsx";
 
@@ -19,7 +17,7 @@ import OpeningHours from "./OpeningHours.jsx";
  * @brief PAGINA DE CONFIGURACOES DO BOT
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-const Body = memo(function Body({ socket }) {
+export default function Body({ socket }) {
 	const { bot, setBot, loading, error } = useGetInfoBot(socket);
 
 	if (error) return (<Error />);
@@ -32,11 +30,9 @@ const Body = memo(function Body({ socket }) {
 			<PromptSuggestion socket={socket} bot={bot} />
 			<MessageNotSupported socket={socket} bot={bot} />
 			<Location socket={socket} bot={bot} />
-			<NewContact />
+			<MessageNewContact socket={socket} bot={bot} />
 			<Redirect />
 			<OpeningHours />
 		</div>
 	);
-});
-
-export default Body;
+};

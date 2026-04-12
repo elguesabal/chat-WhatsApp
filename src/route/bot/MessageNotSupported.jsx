@@ -16,6 +16,8 @@ export function handleSave(socket, input) {
 /**
  * @author VAMPETA
  * @brief COMPONENTE PARA SALVAR MENSAGEM DE MENSAGEM NAO SUPORTADA
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {Object} bot INFORMACOES DO BOT
 */
 export default function MessageNotSupported({ socket, bot }) {
 	const [input, setInput] = useState(bot.messageNotSupported || "");

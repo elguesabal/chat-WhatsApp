@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { useGetSpreadsheet, selectSpreadsheet } from "./useGetSpreadsheet.js";
 
 import Error from "../../screens/Error.jsx";
@@ -10,7 +8,7 @@ import Load from "../../screens/Load.jsx";
  * @brief PAGINA DE CONFIGURACOES DE PLANILHAS
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-const Body = memo(function Body({ socket }) {
+export default function Body({ socket }) {
 	const { infoSpreadsheets, setInfoSpreadsheets, loading, error } = useGetSpreadsheet(socket);
 
 	if (error) return (<Error />);
@@ -37,6 +35,4 @@ const Body = memo(function Body({ socket }) {
 			</div>
 		</div>
 	);
-});
-
-export default Body;
+};
