@@ -24,14 +24,14 @@ export default function Body({ socket }) {
 	if (loading) return (<Load />);
 	return (
 		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
-			<StatusBot socket={socket} bot={bot} setBot={setBot} />
+			<StatusBot socket={socket} bot={bot} />
 			<Explanation />
 			<Prompt socket={socket} bot={bot} setBot={setBot} />
 			<PromptSuggestion socket={socket} bot={bot} />
 			<MessageNotSupported socket={socket} bot={bot} />
 			<Location socket={socket} bot={bot} />
 			<MessageNewContact socket={socket} bot={bot} />
-			<Redirect />
+			<Redirect socket={socket} bot={bot} />
 			<OpeningHours />
 		</div>
 	);

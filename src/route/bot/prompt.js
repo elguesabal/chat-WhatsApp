@@ -31,9 +31,10 @@ export function removeField(setFields, index) {
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA O NOVO PROMPT PARA O BACK END
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {Object} fields ARRAI COM OS CONTEUDOS DOS CAMPOS DE PROMPTS
 */
-export function handleSave(fields, socket) {
+export function handleSave(socket, fields) {
 	const prompt = buildPrompt(fields.filter((f) => (f.trim() !== "")));
 
 	socket.emit("bot:update_prompt", { prompt: prompt }, (res) => {

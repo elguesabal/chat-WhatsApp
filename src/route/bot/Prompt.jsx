@@ -1,6 +1,6 @@
 import { usePrompt } from "./usePrompt.js";
 
-import { addField, updateField, removeField, handleSave, parsePrompt, buildPrompt } from "./prompt.js";
+import { addField, updateField, removeField, handleSave } from "./prompt.js";
 
 /**
  * @author VAMPETA
@@ -32,7 +32,7 @@ export default function Prompt({ socket, bot, setBot }) {
 				<button className="text-sm text-orange-500 hover:underline cursor-pointer" onClick={() => addField(setFields)}>
 					+ Adicionar instrução
 				</button>
-				<button className="px-4 py-2 bg-orange-500 text-black rounded-lg hover:bg-orange-400 transition cursor-pointer" onClick={() => handleSave(fields, socket)}>
+				<button className="px-4 py-2 bg-orange-500 text-black rounded-lg hover:bg-orange-400 transition cursor-pointer" onClick={() => handleSave(socket, fields)}>
 					Salvar
 				</button>
 			</div>
