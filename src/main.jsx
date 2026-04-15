@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast";
 import "./style/index.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { SocketProvider } from "./socket/SocketProvider.jsx";
-import SetPassword from "./route/set password/SetPassword.jsx";
+// import SetPassword from "./route/set password/SetPassword.jsx";
 import Home from "./route/home/home.jsx";
 import Login from "./route/login/Login.jsx";
 import Dashboard from "./route/dashboard/Dashboard.jsx";

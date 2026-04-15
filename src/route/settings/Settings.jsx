@@ -5,8 +5,7 @@ import { useSocket } from "../../socket/useSocket.js";
 import { SideBar, Header } from "../../utils/components/Sidebar.jsx";
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
-// import Body from "./Body.jsx";
-import UnderConstruction from "../../screens/UnderConstruction.jsx";
+import Body from "./Body.jsx";
 
 /**
  * @author VAMPETA
@@ -23,8 +22,7 @@ export default function Settings() {
 			<main className="flex flex-1 flex-col">
 				<Header setOpen={setOpen} title="Configurações" />
 				{!connected && !error && <Load />}
-				{/* {connected && <Body socket={socket} />} */}
-				<UnderConstruction />
+				{connected && <Body socket={socket} />}
 				{error && <Error />}
 			</main>
 		</div>

@@ -35,7 +35,7 @@ export default function Prompt({ socket, bot, setBot }) {
 				{fields.map((field, index) => (
 					<div key={index} className="flex gap-2">
 						<input className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg p-2 outline-none focus:border-orange-500" type="text" value={field} onChange={(e) => updateField(setFields, e.target.value, index)} placeholder="Ex: Seja educado" />
-						<button className="px-2 text-red-400 hover:text-red-300 cursor-pointer" onClick={() => removeField(setFields, index)}>
+						<button className="px-2 text-orange-500 hover:text-orange-400 cursor-pointer" onClick={() => removeField(setFields, index)}>
 							<i className="bi bi-trash text-xl" />
 						</button>
 					</div>

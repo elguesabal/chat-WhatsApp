@@ -5,10 +5,10 @@ import { logout } from "../functions/logout.js";
 /**
  * @author VAMPETA
  * @brief COMPONENTE QUE EXIBE O MENU DE OPCOES NA LATERAL DAS PAGINAS PRINCIPAIS
- * @param {Object} navigate FUNCAO DE NAVEGACAO DO REACT
  * @param {Object} close FUNCAO DE FECHAMENTO DO MENU
 */
-function SidebarContent({ navigate, close }) {
+function SidebarContent({ close }) {
+	const navigate = useNavigate();
 	const location = useLocation();
 
 	return (
@@ -86,14 +86,12 @@ function SidebarContent({ navigate, close }) {
  * @param {Object} close FUNCAO QUE FECHA O Sidebar
 */
 export function SideBar({ open, setOpen }) {
-	const navigate = useNavigate();
-
 	return (
 		<>
 			{open && <div className="fixed inset-0 bg-black/60 z-40 md:hidden" onClick={() => setOpen(false)} />}
 			<aside className={`fixed md:static top-0 left-0 z-50 w-64 h-full bg-zinc-900 border-r border-zinc-800 transform transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`} >
 				<div className="flex flex-col h-full">
-					<SidebarContent navigate={navigate} close={() => setOpen(false)} />
+					<SidebarContent close={() => setOpen(false)} />
 				</div>
 			</aside>
 		</>

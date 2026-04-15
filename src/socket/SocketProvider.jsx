@@ -1,6 +1,9 @@
 import { createContext, useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import createSocket from "./config_socket.js";
+
+import { logout } from "../utils/functions/logout.js";
 
 export const SocketContext = createContext(null);
 
@@ -10,6 +13,7 @@ export const SocketContext = createContext(null);
  * @param children ELEMENTO FILHO
 */
 export function SocketProvider({ children }) {
+	const navigate = useNavigate();
 	const socketRef = useRef(null);
 	const [socket, setSocket] = useState(null);
 	const [connected, setConnected] = useState(false);
@@ -47,6 +51,7 @@ export function SocketProvider({ children }) {
 			console.log("Erro:", error.message);
 			setError(true);
 			setConnected(false);
+			if (error.message === "Token inválido") logout(navigate);
 		});
 		newSocket.on("disconnect", () => {
 // console.log("Desconectado");
