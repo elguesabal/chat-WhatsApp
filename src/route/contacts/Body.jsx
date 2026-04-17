@@ -29,7 +29,7 @@ export default function Body({ socket }) {
 	const { contacts, loading, error } = useGetContacts(socket);
 	const [selected, setSelected] = useState(null);
 	const [search, setSearch] = useState("");
-	
+
 	if (error) return (<Error />);
 	if (loading) return (<Load />);
 	const filtered = contacts.filter((contact) => (contact.name || "").toLowerCase().includes(search.toLowerCase()));

@@ -1,108 +1,64 @@
-// /**
-//  * @author VAMPETA
-//  * @brief PAGINA DE CONFIGURACOES
-//  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
-// */
-// export default function Body({ socket }) {
-//     return (
-//         <div className="p-6 flex flex-col gap-6 max-w-4xl overflow-y-auto animate-toastIn">
+import { Link } from "react-router-dom";
 
-//         </div>
-//     );
-// };
+/**
+ * @author VAMPETA
+ * @brief CARD QUE REDIRECIONA PARA A PAGINA ESPECIFICA DE MENSAGEM RAPIDA
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} route ROTA DA PAGINA DO TIPO DA MENSAGEM
+ * @param {String} type TIPO DA MENSAGEM
+ * @param {String} icon ICONE DO CARD
+ * @param {String} deactivated INDICA SE O COMPONENTE ESTA DESATIVADO
+*/
+function Card({ route, type, icon, deactivated }) {
+	return (
+		<div className="flex flex-col relative gap-4 bg-zinc-900 border border-zinc-800 rounded-lg p-4 hover:bg-zinc-800 transition">
+			{deactivated && (
+				<div className="flex items-center justify-center absolute inset-0 bg-black/80 border border-zinc-800 rounded-lg z-10">
+					<p className="text-orange-500">Indisponível no momento</p>
+				</div>
+			)}
+			<i className={`bi ${icon} text-xl text-orange-500`} />
+			<div>
+				<p className="text-sm font-medium">{type}</p>
+				<p className="text-xs text-zinc-400">Criar nova mensagem </p>
+			</div>
+			<Link className="text-xs text-orange-500 hover:underline" to={`/quick-messages/${route}`}>Ver mensagens →</Link>
+		</div>
+	);
+}
 
-
-
-import { useState } from "react";
-
-const TYPES = [
-    { key: "text", label: "Texto", icon: "bi-chat-dots" },
-    { key: "sticker", label: "Figurinha", icon: "bi-emoji-smile" },
-    { key: "image", label: "Imagem", icon: "bi-image" },
-    { key: "audio", label: "Áudio", icon: "bi-mic" },
-    { key: "video", label: "Vídeo", icon: "bi-camera-video" },
-    { key: "location", label: "Localização", icon: "bi-geo-alt" },
-    { key: "contact", label: "Contato", icon: "bi-person-lines-fill" },
-    { key: "document", label: "Documento", icon: "bi-file-earmark" },
-    { key: "buttons", label: "Botões", icon: "bi-ui-checks" },
-    { key: "list", label: "Lista", icon: "bi-list-ul" },
-    { key: "template", label: "Template", icon: "bi-layout-text-window" }
-];
-
+/**
+ * @author VAMPETA
+ * @brief PAGINA DE MENSAGENS RAPIDAS
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+*/
 export default function Body({ socket }) {
-    const [messages, setMessages] = useState([]);
-
-    function handleCreate(type) {
-        const msg = {
-            id: Date.now(),
-            name: "Nova mensagem",
-            type,
-            content: "",
-            mediaUrl: "",
-            caption: ""
-        };
-
-        setMessages(prev => [msg, ...prev]);
-    }
-
-    function countByType(type) {
-        return messages.filter(m => m.type === type).length;
-    }
-
-    return (
-        <div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
-
-            {/* INTRO */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex flex-col gap-3">
-                <h2 className="text-lg font-semibold">Mensagens rápidas</h2>
-
-                <p className="text-sm text-zinc-400">
-                    Crie mensagens prontas para agilizar seu atendimento.
-                    Escolha um tipo abaixo para começar.
-                </p>
-
-                <ul className="text-sm text-zinc-400 list-disc pl-5">
-                    <li>Use mensagens curtas e objetivas</li>
-                    <li>Adicione mídia para enriquecer</li>
-                    <li>Padronize respostas frequentes</li>
-                </ul>
-            </div>
-
-            {/* CARDS */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-
-                {TYPES.map(type => (
-                    <div
-                        key={type.key}
-                        onClick={() => handleCreate(type.key)}
-                        className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex flex-col gap-4 hover:bg-zinc-800 transition cursor-pointer"
-                    >
-                        <div className="flex justify-between items-center">
-                            <i className={`bi ${type.icon} text-xl text-orange-500`} />
-
-                            <span className="text-xs bg-zinc-800 px-2 py-1 rounded text-zinc-400">
-                                {countByType(type.key)} salvas
-                            </span>
-                        </div>
-
-                        <div>
-                            <p className="text-sm font-medium">{type.label}</p>
-                            <p className="text-xs text-zinc-400">
-                                Criar nova mensagem
-                            </p>
-                        </div>
-
-                        <button
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-xs text-orange-500 hover:underline"
-                        >
-                            Ver mensagens →
-                        </button>
-                    </div>
-                ))}
-
-            </div>
-
-        </div>
-    );
+	return (
+		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
+			{/* INTRO */}
+			<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+				<h2 className="text-lg font-semibold">Mensagens rápidas</h2>
+				<p className="text-sm text-zinc-400">Crie mensagens prontas para agilizar seu atendimento. Escolha um tipo abaixo para começar.</p>
+				<ul className="text-sm text-zinc-400 list-disc pl-5">
+					<li>Use mensagens curtas e objetivas</li>
+					<li>Adicione mídia para enriquecer</li>
+					<li>Padronize respostas frequentes</li>
+				</ul>
+			</div>
+			{/* CARDS */}
+			<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+				<Card route="text" type="Texto" icon="bi-chat-dots" />
+				<Card route="sticker" type="Figurinha" icon="bi-emoji-smile" deactivated />
+				<Card route="audio" type="Áudio" icon="bi-mic" deactivated />
+				<Card route="image" type="Imagem" icon="bi-image" deactivated />
+				<Card route="video" type="Vídeo" icon="bi-camera-video" deactivated />
+				<Card route="location" type="Localização" icon="bi-geo-alt" deactivated />
+				<Card route="contact" type="Contato" icon="bi-person-lines-fill" deactivated/>
+				<Card route="document" type="Documento" icon="bi-file-earmark" deactivated />
+				<Card route="button" type="Botões" icon="bi-ui-checks" deactivated />
+				<Card route="list" type="Lista" icon="bi-list-ul" deactivated />
+				<Card route="template" type="Template" icon="bi-layout-text-window" deactivated />
+			</div>
+		</div>
+	);
 }
