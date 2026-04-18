@@ -13,8 +13,7 @@ import Editor from "../Editor.jsx";
  * @param {Hook} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Body({ socket }) {
-	// const [messages, setMessages] = useState([]);
-	const { messages, setMessages, loading, error } = useGetQuickText(socket);
+	const { messages, setMessages, loading, error } = useGetQuickText(socket, "text");
 	const [selectedId, setSelectedId] = useState(null);
 	const [view, setView] = useState("list");
 	const [search, setSearch] = useState("");
