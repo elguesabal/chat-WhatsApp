@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
  * @author VAMPETA
  * @brief HOOK QUE BUSCA INFORMACOES DE MENSAGENS RAPIDAS NO BACK END
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
- * @param {String} type 
+ * @param {String} type TIPO DA MENSAGEM
 */
 export function useGetQuickText(socket, type) {
 	const [messages, setMessages] = useState([]);

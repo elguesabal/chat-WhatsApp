@@ -26,7 +26,7 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 					{/* HEADER */}
 					<div className="flex justify-between gap-2">
 						<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" value={selected.name} onChange={(e) => handleUpdateName(e.target.value, setMessages, selectedMessage)} />
-						<button className="text-zinc-400 hover:text-red-500 transition" onClick={() => handleDelete(selected.timestamp, setMessages, setSelectedMessage, setView)}>
+						<button className="text-zinc-400 hover:text-red-500 transition" onClick={() => handleDelete(selected.id, setMessages, setSelectedMessage, setView)}>
 							<i className="bi bi-trash text-lg" />
 						</button>
 					</div>

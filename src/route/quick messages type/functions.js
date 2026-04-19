@@ -6,19 +6,9 @@
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
 export function handleNew(setMessages, setSelectedMessage, setView) {
-	// const newMsg = {
-	// 	id: new Date().toISOString(),
-	// 	name: "Nova mensagem",
-	// 	content: ""
-	// };
-	// const newMsg = {
-	// 	name: "Nova mensagem",
-	// 	timestamp: new Date().toISOString(),
-	// 	content: ""
-	// };
 	const newMsgText = {
 		name: "Nova mensagem",
-		timestamp: new Date().toISOString(),
+		id: "new message",
 		message: {
 			type: "text",
 			text: {
@@ -28,19 +18,19 @@ export function handleNew(setMessages, setSelectedMessage, setView) {
 	};
 
 	setMessages((prev) => ([newMsgText, ...prev]));
-	setSelectedMessage(newMsgText.timestamp);
+	setSelectedMessage(newMsgText.id);
 	setView("editor");
 }
 
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE SELECIONA UMA MENSAGEM E ABRE O EDITOR
- * @param {String} timestamp IDENTIFICADOR DA MENSAGEM
+ * @param {String} id IDENTIFICADOR DA MENSAGEM
  * @param {Function} setSelectedMessage DEFINE QUAL A MENSAGEM ESTA SELECIONADA
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
-export function handleSelect(timestamp, setSelectedMessage, setView) {
-	setSelectedMessage(timestamp);
+export function handleSelect(id, setSelectedMessage, setView) {
+	setSelectedMessage(id);
 	setView("editor");
 }
 
@@ -52,7 +42,7 @@ export function handleSelect(timestamp, setSelectedMessage, setView) {
  * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
 */
 export function handleUpdateName(name, setMessages, selectedMessage) {
-	setMessages((prev) => (prev.map((msg) => ((msg.timestamp === selectedMessage) ? { ...msg, name: name } : msg))));
+	setMessages((prev) => (prev.map((msg) => ((msg.id === selectedMessage) ? { ...msg, name: name } : msg))));
 }
 
 /**
@@ -64,13 +54,9 @@ export function handleUpdateName(name, setMessages, selectedMessage) {
  * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
 */
 export function handleUpdateFields(field, value, setMessages, selectedMessage) {
-	// const type = msg.message.type;
-
-	// setMessages((prev) => (prev.map((msg) => ((msg.timestamp === selectedMessage) ? { ...msg, message: { ...msg.message, [type]: { ...msg.message[type], [field]: value } } } : msg))));
-
 	setMessages((prev) =>
 		prev.map((msg) => {
-			if (msg.timestamp !== selectedMessage) return (msg);
+			if (msg.id !== selectedMessage) return (msg);
 			const type = msg.message.type;
 			return ({
 				...msg,
@@ -89,13 +75,13 @@ export function handleUpdateFields(field, value, setMessages, selectedMessage) {
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE APAGA A MENSAGEM
- * @param {String} timestamp IDENTIFICADOR DA MENSAGEM
+ * @param {String} id IDENTIFICADOR DA MENSAGEM
  * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
  * @param {Function} setSelectedMessage DEFINE QUAL A MENSAGEM ESTA SELECIONADA
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
-export function handleDelete(timestamp, setMessages, setSelectedMessage, setView) {
-	setMessages((prev) => (prev.filter((m) => (m.timestamp !== timestamp))));
+export function handleDelete(id, setMessages, setSelectedMessage, setView) {
+	setMessages((prev) => (prev.filter((m) => (m.id !== id))));
 	setSelectedMessage(null);
 	setView("list");
 }

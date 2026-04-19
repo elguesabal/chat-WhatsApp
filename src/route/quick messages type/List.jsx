@@ -26,7 +26,7 @@ export default function List({ socket, messages, setMessages, selectedMessage, s
 					<p className="text-xs text-zinc-500 text-center mt-4">Nenhuma mensagem encontrada</p>
 				)}
 				{filteredMessages.map((msg) => (
-					<div className={`p-3 rounded border cursor-pointer transition ${(selectedMessage === msg.timestamp) ? "bg-zinc-800 border-orange-500" : "bg-zinc-900 border-zinc-800 hover:bg-zinc-800"}`} key={msg.timestamp} onClick={() => handleSelect(msg.timestamp, setSelectedMessage, setView)}>
+					<div className={`p-3 rounded border cursor-pointer transition ${(selectedMessage === msg.id) ? "bg-zinc-800 border-orange-500" : "bg-zinc-900 border-zinc-800 hover:bg-zinc-800"}`} key={msg.id} onClick={() => handleSelect(msg.id, setSelectedMessage, setView)}>
 						{msg.message.type === "text" && <ContentListText content={msg} />}
 						{msg.message.type === "location" && <ContentListLocation content={msg} />}
 					</div>

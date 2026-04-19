@@ -19,7 +19,7 @@ export default function Body({ socket }) {
 	const [selectedMessage, setSelectedMessage] = useState(null);
 	const [view, setView] = useState("list");
 	const [search, setSearch] = useState("");
-	const selected = messages.find((m) => (m.timestamp === selectedMessage));
+	const selected = messages.find((m) => (m.id === selectedMessage));
 	const filteredMessages = messages.filter((m) => (m.name.toLowerCase().includes(search.toLowerCase()) || m.message.text.body.toLowerCase().includes(search.toLowerCase())));
 
 	if (error) return (<Error />);
