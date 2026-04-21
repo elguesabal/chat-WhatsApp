@@ -9,9 +9,8 @@ import { memo, useMemo } from "react";
 */
 export function sendReadyText(socket, phone, message) {
 	if (!message || !message.text) return ;
-	socket.emit("chat:send:text", {
-		phone: phone,
-		text: message.text
+	socket.emit("chat:send:text", { phone: phone, text: message.text.body }, (res) => {
+
 	});
 }
 
@@ -76,7 +75,7 @@ function formattedText(text) {
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 export const Text = memo(function Text({ message }) {
-	const text = useMemo(() => formattedText(message.text), [message.text]);
+	const text = useMemo(() => formattedText(message.text.body), [message.text.body]);
 
 	return (
 		<p>{text}</p>

@@ -2,6 +2,23 @@ import FieldsText from "./text/editor/FieldsText.jsx";
 
 import { handleUpdateName, handleUpdateFields, handleDelete } from "./functions.js";
 
+function handleCancel(id, setMessages, setSelectedMessage, setView) {
+	if (id === "new message") return (handleDelete(id, setMessages, setSelectedMessage, setView));
+	setView("list");
+}
+
+function handleSave(socket, selected) {
+	socket.emit("quick-messages:save_text", { id: (selected.id === "new message") ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
+		if (!res || res.error) return ;
+// console.log(res.id)
+		if (selected.id === "new message") {
+// SALVAR A NOVA MENSAGEM
+		} else {
+// MANTER O MESMO ELEMENTO?
+		}
+	});
+}
+
 /**
  * @author VAMPETA
  * @brief COMPONENTE RESPONSAVEL PELO EDITOR DA MENSAGEM (POR ENQUANTO AINDA EXISTE PREVIEW MAS ACHO QUE VOU REMOVER)
@@ -43,6 +60,15 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 							</div>
 						</div>
 					</div> */}
+
+					<div className="flex justify-center gap-5">
+						<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleCancel(selected.id, setMessages, setSelectedMessage, setView)}>
+							Cancelar
+						</button>
+						<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleSave(socket, selected)}>
+							Salvar
+						</button>
+					</div>
 
 				</>
 			)}
