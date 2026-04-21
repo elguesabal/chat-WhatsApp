@@ -1,23 +1,6 @@
 import FieldsText from "./text/editor/FieldsText.jsx";
 
-import { handleUpdateName, handleUpdateFields, handleDelete } from "./functions.js";
-
-function handleCancel(id, setMessages, setSelectedMessage, setView) {
-	if (id === "new message") return (handleDelete(id, setMessages, setSelectedMessage, setView));
-	setView("list");
-}
-
-function handleSave(socket, selected) {
-	socket.emit("quick-messages:save_text", { id: (selected.id === "new message") ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
-		if (!res || res.error) return ;
-// console.log(res.id)
-		if (selected.id === "new message") {
-// SALVAR A NOVA MENSAGEM
-		} else {
-// MANTER O MESMO ELEMENTO?
-		}
-	});
-}
+import { handleUpdateName, handleUpdateFields, handleDelete, handleCancel, handleSave } from "./functions.js";
 
 /**
  * @author VAMPETA
@@ -43,7 +26,7 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 					{/* HEADER */}
 					<div className="flex justify-between gap-2">
 						<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" value={selected.name} onChange={(e) => handleUpdateName(e.target.value, setMessages, selectedMessage)} />
-						<button className="text-zinc-400 hover:text-red-500 transition" onClick={() => handleDelete(selected.id, setMessages, setSelectedMessage, setView)}>
+						<button className="text-zinc-400 hover:text-red-500 transition" onClick={() => handleDelete(socket, selected.id, setMessages, setSelectedMessage, setView)}>
 							<i className="bi bi-trash text-lg" />
 						</button>
 					</div>
@@ -65,7 +48,7 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 						<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleCancel(selected.id, setMessages, setSelectedMessage, setView)}>
 							Cancelar
 						</button>
-						<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleSave(socket, selected)}>
+						<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleSave(socket, selected, setMessages, setSelectedMessage, setView)}>
 							Salvar
 						</button>
 					</div>

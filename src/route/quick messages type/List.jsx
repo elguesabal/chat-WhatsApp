@@ -14,7 +14,7 @@ export default function List({ socket, messages, setMessages, selectedMessage, s
 
 			{/* HEADER */}
 			<div className="flex flex-col gap-3">
-				<button className="bg-orange-500 text-black rounded p-2 text-sm hover:opacity-90 transition" onClick={() => handleNew(setMessages, setSelectedMessage, setView, selectedMessage)}>
+				<button className="bg-orange-500 text-black rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleNew(setMessages, setSelectedMessage, setView, selectedMessage)}>
 					+ Nova mensagem
 				</button>
 				<input className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" placeholder="Buscar..." value={search} onChange={(e) => setSearch(e.target.value)} />
