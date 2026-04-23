@@ -52,7 +52,7 @@ export default function Body({ socket }) {
 				<Card route="audio" type="Áudio" icon="bi-mic" deactivated />
 				<Card route="image" type="Imagem" icon="bi-image" deactivated />
 				<Card route="video" type="Vídeo" icon="bi-camera-video" deactivated />
-				<Card route="location" type="Localização" icon="bi-geo-alt" deactivated />
+				<Card route="location" type="Localização" icon="bi-geo-alt" />
 				<Card route="contact" type="Contato" icon="bi-person-lines-fill" deactivated/>
 				<Card route="document" type="Documento" icon="bi-file-earmark" deactivated />
 				<Card route="button" type="Botões" icon="bi-ui-checks" deactivated />

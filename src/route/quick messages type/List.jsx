@@ -1,5 +1,7 @@
+import { useParams } from "react-router-dom";
+
 import ContentListText from "./text/list/ContentListText.jsx";
-import ContentListLocation from "./text/list/ContentListLocation.jsx";
+import ContentListLocation from "./location/list/ContentListLocation.jsx";
 
 import { handleNew, handleSelect } from "./functions.js";
 
@@ -9,12 +11,14 @@ import { handleNew, handleSelect } from "./functions.js";
  * @param {Hook} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function List({ socket, messages, setMessages, selectedMessage, setSelectedMessage, view, setView, search, setSearch, selected, filteredMessages }) {
+	const { type } = useParams();
+
 	return (
 		<div className={`${view === "list" ? "flex" : "hidden"} xl:flex flex-col w-full xl:w-72 2xl:w-80 bg-zinc-900 border border-zinc-800 rounded-lg p-3 min-h-0`}>
 
 			{/* HEADER */}
 			<div className="flex flex-col gap-3">
-				<button className="bg-orange-500 text-black rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleNew(setMessages, setSelectedMessage, setView, selectedMessage)}>
+				<button className="bg-orange-500 text-black rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleNew(type, setMessages, setSelectedMessage, setView, selectedMessage)}>
 					+ Nova mensagem
 				</button>
 				<input className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" placeholder="Buscar..." value={search} onChange={(e) => setSearch(e.target.value)} />

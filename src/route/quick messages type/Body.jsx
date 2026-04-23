@@ -26,8 +26,8 @@ export default function Body({ socket }) {
 	if (loading) return (<Load />);
 	return (
 		<div className="flex flex-col xl:flex-row gap-4 p-4 sm:p-6 xl:gap-6 h-full min-h-0 overflow-hidden">
-<List socket={socket} messages={messages} setMessages={setMessages} selectedMessage={selectedMessage} setSelectedMessage={setSelectedMessage} view={view} setView={setView} search={search} setSearch={setSearch} selected={selected} filteredMessages={filteredMessages} />
-<Editor socket={socket} messages={messages} setMessages={setMessages} selectedMessage={selectedMessage} setSelectedMessage={setSelectedMessage} view={view} setView={setView} search={search} setSearch={setSearch} selected={selected} filteredMessages={filteredMessages} />
+			<List socket={socket} messages={messages} setMessages={setMessages} selectedMessage={selectedMessage} setSelectedMessage={setSelectedMessage} view={view} setView={setView} search={search} setSearch={setSearch} selected={selected} filteredMessages={filteredMessages} />
+			<Editor socket={socket} messages={messages} setMessages={setMessages} selectedMessage={selectedMessage} setSelectedMessage={setSelectedMessage} view={view} setView={setView} search={search} setSearch={setSearch} selected={selected} filteredMessages={filteredMessages} />
 		</div>
 	);
 }

@@ -16,7 +16,6 @@ import Chats from "./route/chats/Chats.jsx";
 import Chat from "./route/chat/Chat.jsx";
 import Contacts from "./route/contacts/Contacts.jsx";
 import QuickMessages from "./route/quick messages/QuickMessages.jsx";
-// import QuickText from "./route/quick messages/route/Text/QuickText.jsx";
 import QuickMessagesType from "./route/quick messages type/QuickMessagesType.jsx";
 import Bot from "./route/bot/Bot.jsx";
 import Spreadsheets from "./route/spreadsheets/Spreadsheets.jsx";
@@ -58,7 +57,6 @@ createRoot(document.getElementById("root")).render(
 						<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 						<Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
 						<Route path="/quick-messages" element={<ProtectedRoute><QuickMessages /></ProtectedRoute>} />
-						{/* <Route path="/quick-messages/text" element={<ProtectedRoute><QuickText /></ProtectedRoute>} /> */}
 						<Route path="/quick-messages/:type" element={<ProtectedRoute><QuickMessagesType /></ProtectedRoute>} />
 						<Route path="/bot" element={<ProtectedRoute><Bot /></ProtectedRoute>} />
 						<Route path="/spreadsheets" element={<ProtectedRoute><Spreadsheets /></ProtectedRoute>} />

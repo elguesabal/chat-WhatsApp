@@ -1,26 +1,42 @@
 import toast from "react-hot-toast";
 
+const messageType = {
+	text: {
+		type: "text",
+		text: {
+			body: ""
+		}
+	},
+	location: {
+		type: "location",
+		location: {
+			name: "",
+			address: "",
+			latitude: "",
+			longitude: ""
+		}
+	}
+}
+
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE CRIA UMA NOVA MENSAGEM
+ * @param {String} type TYPO DA NOVA MENSAGEM
  * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
  * @param {Function} setSelectedMessage DEFINE QUAL A MENSAGEM ESTA SELECIONADA
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
-export function handleNew(setMessages, setSelectedMessage, setView) {
+export function handleNew(type, setMessages, setSelectedMessage, setView) {
+	const newId = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 	const newMsgText = {
 		name: "Nova mensagem",
-		id: "new message",
-		message: {
-			type: "text",
-			text: {
-				body: ""
-			}
-		}
+		id: newId,
+		isNew: true,
+		message: messageType[type]
 	};
 
 	setMessages((prev) => ([newMsgText, ...prev]));
-	setSelectedMessage(newMsgText.id);
+	setSelectedMessage(newId);
 	setView("editor");
 }
 
@@ -96,13 +112,16 @@ export function handleDelete(socket, id, setMessages, setSelectedMessage, setVie
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE CANCELA A CRIACAO DA MENSAGEM (AINDA NAO FUNCIONA BEM COM CANCELAR A EDICAO DA MENSAGEM)
- * @param {String} id IDENTIFICADOR DA MENSAGEM
+ * @param {object} selected INFORMACOES DA MENSAGEM SELECIONADA
  * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
  * @param {Function} setSelectedMessage DEFINE QUAL A MENSAGEM ESTA SELECIONADA
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
-export function handleCancel(id, setMessages, setSelectedMessage, setView) {
-	if (id === "new message") return (handleDelete(id, setMessages, setSelectedMessage, setView));
+export function handleCancel(selected, setMessages, setSelectedMessage, setView) {
+	if (selected?.isNew) {
+		setMessages((prev) => (prev.filter((m) => (m.id !== selected.id))));
+		setSelectedMessage(null);
+	}
 	setView("list");
 }
 
@@ -110,17 +129,16 @@ export function handleCancel(id, setMessages, setSelectedMessage, setView) {
  * @author VAMPETA
  * @brief FUNCAO QUE SALVA E ATUALZA O CONTEUDO DA MENSAGEM NO BACK END
  * @param {Function} socket SOCKET DE CONEXAO COM O BACK END
- * @param {String} id IDENTIFICADOR DA MENSAGEM
  * @param {String} selected INFORMACOES DA MENSAGEM SELECIONADA
  * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
  * @param {Function} setSelectedMessage DEFINE QUAL A MENSAGEM ESTA SELECIONADA
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
 export function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
-	socket.emit("quick-messages:save_quick_message", { id: (selected.id === "new message") ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
+	socket.emit("quick-messages:save_quick_message", { id: (selected.isNew) ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
 		if (!res || res.error) return (toast.error("Erro ao salvar mensagem!"));
 		setMessages((prev) => {
-			if (selected.id === "new message") return ([{ ...selected, id: res.id }, ...prev.filter((m) => (m.id !== "new message"))]);
+			if (selected.isNew) return ([{ ...selected, id: res.id, isNew: false }, ...prev.filter((m) => (m.id !== selected.id))]);
 			return (prev.map((msg) => ((msg.id === selected.id) ? { ...msg, ...selected, id: res.id } : msg)));
 		});
 		setSelectedMessage(res.id);

@@ -6,7 +6,6 @@ import { SideBar, Header } from "../../utils/components/Sidebar.jsx";
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
 import Body from "./Body.jsx";
-// import UnderConstruction from "../../screens/UnderConstruction.jsx";
 
 /**
  * @author VAMPETA
@@ -24,7 +23,6 @@ export default function QuickMessages() {
                 <Header setOpen={setOpen} title="Mensagens rápidas" />
                 {!connected && !error && <Load />}
                 {connected && <Body socket={socket} />}
-                {/* <UnderConstruction /> */}
                 {error && <Error />}
             </main>
         </div>
