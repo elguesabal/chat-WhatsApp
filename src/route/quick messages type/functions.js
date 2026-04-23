@@ -84,11 +84,12 @@ export function handleUpdateFields(field, value, setMessages, selectedMessage) {
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
 export function handleDelete(socket, id, setMessages, setSelectedMessage, setView) {
-	setMessages((prev) => (prev.filter((m) => (m.id !== id))));
-	setSelectedMessage(null);
-	setView("list");
 	socket.emit("quick-messages:delete_quick_message", { id: id }, (res) => {
-console.log(res)
+		if (res !== 204) return (toast.error("Erro ao deletar mensagem!"));
+		setMessages((prev) => (prev.filter((m) => (m.id !== id))));
+		setSelectedMessage(null);
+		setView("list");
+		toast.success("Mensagem deletada!")
 	});
 }
 
@@ -117,7 +118,7 @@ export function handleCancel(id, setMessages, setSelectedMessage, setView) {
 */
 export function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
 	socket.emit("quick-messages:save_quick_message", { id: (selected.id === "new message") ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
-		if (!res || res.error) return ;
+		if (!res || res.error) return (toast.error("Erro ao salvar mensagem!"));
 		setMessages((prev) => {
 			if (selected.id === "new message") return ([{ ...selected, id: res.id }, ...prev.filter((m) => (m.id !== "new message"))]);
 			return (prev.map((msg) => ((msg.id === selected.id) ? { ...msg, ...selected, id: res.id } : msg)));
