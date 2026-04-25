@@ -7,6 +7,13 @@ const messageType = {
 			body: ""
 		}
 	},
+	image: {
+		type: "image",
+		image: {
+			link: "",
+			caption: ""
+		}
+	},
 	location: {
 		type: "location",
 		location: {

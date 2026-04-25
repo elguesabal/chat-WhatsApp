@@ -44,6 +44,7 @@ export default function List({ socket, messages, setMessages, selectedMessage, s
 				{filteredMessages.map((msg) => (
 					<div className={`p-3 rounded border cursor-pointer transition ${(selectedMessage === msg.id) ? "bg-zinc-800 border-orange-500" : "bg-zinc-900 border-zinc-800 hover:bg-zinc-800"}`} key={msg.id} onClick={() => handleSelect(msg.id, setSelectedMessage, setView)}>
 						{msg.message.type === "text" && <ContentList name={msg.name} preview={msg.message.text.body} />}
+						{msg.message.type === "image" && <ContentList name={msg.name} preview="Foto" />}
 						{msg.message.type === "location" && <ContentList name={msg.name} preview={msg.message.location.name} />}
 					</div>
 				))}
