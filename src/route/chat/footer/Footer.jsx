@@ -22,14 +22,9 @@ function OutsideResponseWindow() {
 export default function Footer({ socket }) {
 	const { replyWindow } = useReplyWindow(socket);
 
-	switch (replyWindow) {				// PQ RAIOS ESTOU USANDO SWITCH AKI???
-		case null:
-			return (<></>);
-		case true:
-			return (<ChatComposer socket={socket} />);
-		case false:
-			return (<OutsideResponseWindow />);
-		default:
-			return (<></>);
-	}
+	return (
+		<>
+			{(replyWindow) ? <ChatComposer socket={socket} /> : <OutsideResponseWindow />}
+		</>
+	);
 }

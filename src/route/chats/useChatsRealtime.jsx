@@ -27,6 +27,8 @@ function textChat(data) {
 			return (data.contacts[0].name.formatted_name);
 		case "document":
 			return ((data.document.filename) ? data.document.filename : "Documento");
+		case "interactive":
+			return (data.interactive.body.text);
 		default:
 			return (null);
 	}

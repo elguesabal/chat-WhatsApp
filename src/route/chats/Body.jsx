@@ -41,9 +41,7 @@ function TypeMessage({ type }) {
 			return (<i className="bi bi-person-vcard mr-2 text-orange-500" />);
 		case "document":
 			return (<i className="bi bi-file-earmark-text mr-2 text-orange-500" />);
-		case "list":
-			return (<i className="bi bi-list-ul mr-2 text-orange-500" />);
-		case "button":
+		case "interactive":
 			return (<i className="bi bi-list-ul mr-2 text-orange-500" />);
 		default:
 			return (null);

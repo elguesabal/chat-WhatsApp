@@ -84,6 +84,7 @@ function Messages({ loading, info }) {
 					<Card loading={loading} text="Localização" value={info.sent?.location} />
 					<Card loading={loading} text="Contato" value={info.sent?.contacts} />
 					<Card loading={loading} text="Documento" value={info.sent?.document} />
+					<Card loading={loading} text="Botão" value={info.sent?.button} />
 				</div>
 			</div>
 		</>

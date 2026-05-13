@@ -33,9 +33,7 @@ function IconeChat({ type }) {
 			return (<i className="bi bi-person-vcard mr-2 text-white" />);
 		case "document":
 			return (<i className="bi bi-file-earmark-text mr-2 text-white" />);
-		case "list":
-			return (<i className="bi bi-list-ul mr-2 text-white" />);
-		case "button":
+		case "interactive":
 			return (<i className="bi bi-list-ul mr-2 text-white" />);
 		default:
 			return (null);
@@ -65,6 +63,8 @@ function textChat(data) {
 			return (data.contacts[0].name.formatted_name);
 		case "document":
 			return ((data.document.filename) ? data.document.filename : "Documento");
+		case "interactive":
+			return (data.interactive.body.text);
 		default:
 			return (null);
 	}

@@ -8,6 +8,7 @@ import Video from "./Video.jsx";
 import Location from "./Location.jsx";
 import Contacts from "./Contacts.jsx";
 import Document from "./Document.jsx";
+import Interactive from "./Interactive.jsx";
 
 /**
  * @author VAMPETA
@@ -32,6 +33,8 @@ function MessageContext({ context }) {
 			return (<Contacts context={context} />);
 		case "document":
 			return (<Document context={context} />);
+		case "interactive":
+			return (<Interactive context={context} />);
 		default:
 			return (<p className="text-red-900"><i>Pré-visualização de mensagem do tipo <b>{(context.data?.type) ? context.data?.type : "desconhecida"}</b> não suportada</i></p>);
 	}
