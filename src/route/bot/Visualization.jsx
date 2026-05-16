@@ -27,7 +27,7 @@ export default function Visualization({ socket, bot }) {
 	const [visualization, setVisualization] = useState(bot.visualization);
 
 	return (
-		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5" id="visualization">
 			<div>
 				<h2 className="text-lg font-semibold">Visualização de Mensagens</h2>
 				<p className="text-sm text-zinc-400">Ative ou desative a visualização das mensagens no WhatsApp.</p>

@@ -46,7 +46,7 @@ export default function PromptSuggestion({ socket, bot }) {
 	const textareaRef = useRef(null);
 
 	return (
-		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-4" id="prompt-suggestion">
 			<div className="flex flex-col gap-2">
 				<h2 className="text-lg font-semibold">Sugestão de Prompt com IA</h2>
 				<p className="text-sm text-zinc-400">Descreva abaixo como você gostaria de melhorar o comportamento do bot. Você pode pedir ajustes como deixar as respostas mais formais, mais curtas, mais detalhadas ou adaptadas a um tipo específico de cliente. A IA analisará o prompt atual e sugerirá uma versão otimizada para você.</p>

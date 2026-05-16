@@ -25,7 +25,7 @@ export default function MessageNewContact({ socket, bot }) {
 	const [input, setInput] = useState(bot.messageNewContact || "");
 
 	return (
-		<div className="flex flex-col gap-4 bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+		<div className="flex flex-col gap-4 bg-zinc-900 border border-zinc-800 rounded-lg p-5" id="message-new-contact">
 			<div>
 				<h2 className="text-lg font-semibold">Mensagem de boas-vindas</h2>
 				<p className="text-sm text-zinc-400">Mensagem enviada automaticamente quando o cliente entra em contato pela primeira vez.</p>

@@ -13,7 +13,7 @@ export default function Prompt({ socket, bot, setBot }) {
 	const { fields, setFields } = usePrompt(bot, setBot);
 
 	return (
-		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5" id="prompt">
 			<div className="flex flex-col gap-3">
 				<h2 className="text-lg font-semibold">Prompt de IA</h2>
 				<p className="text-sm text-zinc-400">O prompt define como a inteligência artificial deve responder seus clientes. Cada campo é uma instrução simples que orienta o comportamento do bot.</p>

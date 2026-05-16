@@ -16,7 +16,7 @@ export default function Redirect({ socket, bot }) {
 	const [input, setInput] = useState(bot.redirect.message || "");
 
 	return (
-		<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-5 flex flex-col gap-3">
+		<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-5 flex flex-col gap-3" id="redirect">
 			<div>
 				<h2 className="text-lg font-semibold">Atendimento humano</h2>
 				<p className="text-sm text-zinc-400">Configure como o bot deve encaminhar o cliente para um atendente humano.</p>

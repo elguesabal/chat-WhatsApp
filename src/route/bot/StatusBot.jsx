@@ -27,7 +27,7 @@ export default function StatusBot({ socket, bot }) {
 	const [status, setStatus] = useState(bot.activated);
 
 	return (
-		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5" id="status-bot">
 			<div>
 				<h2 className="text-lg font-semibold">Status do Bot</h2>
 				<p className="text-sm text-zinc-400">Ative ou desative as respostas automáticas da IA no WhatsApp.</p>

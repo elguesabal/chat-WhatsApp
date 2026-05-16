@@ -29,7 +29,7 @@ export default function Location({ socket, bot }) {
 	const [input, setInput] = useState(bot.location || {});
 
 	return (
-		<div className="flex flex-col gap-4 bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+		<div className="flex flex-col gap-4 bg-zinc-900 border border-zinc-800 rounded-lg p-5" id="location">
 			<div>
 				<h2 className="text-lg font-semibold">Localização do estabelecimento</h2>
 				<p className="text-sm text-zinc-400">Informe os dados do endereço para que o bot possa compartilhar com o cliente quando necessário.</p>

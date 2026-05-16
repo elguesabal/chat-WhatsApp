@@ -25,7 +25,7 @@ export default function MessageNotSupported({ socket, bot }) {
 	const [input, setInput] = useState(bot.messageNotSupported || "");
 
 	return (
-		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+		<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-5" id="message-not-supported">
 			<div>
 				<h2 className="text-lg font-semibold">Mensagem para mídia não suportada</h2>
 				<p className="text-sm text-zinc-400">Resposta enviada quando o cliente envia áudio, vídeo ou outro formato não suportado.</p>
