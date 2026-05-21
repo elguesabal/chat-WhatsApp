@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 // import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { OverlayProvider } from "./overlay/OverlayProvider.jsx";
 
 import Cookies from "js-cookie";
 import { Toaster } from "react-hot-toast";
@@ -50,6 +51,7 @@ createRoot(document.getElementById("root")).render(
 			}} />
 			<BrowserRouter>
 				<SocketProvider>
+<OverlayProvider>
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
@@ -69,6 +71,7 @@ createRoot(document.getElementById("root")).render(
 						<Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
+</OverlayProvider>
 				</SocketProvider>
 			</BrowserRouter>
 		</>

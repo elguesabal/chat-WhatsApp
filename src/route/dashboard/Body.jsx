@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useGetDashboard } from "./useGetDashboard.js";
+import { useOverlay } from "../../overlay/OverlayProvider.jsx";
 
 import DateSelector from "./DateSelector.jsx";
 import Metrics from "./Metrics.jsx"
@@ -15,9 +16,12 @@ import Messages from "./Messages.jsx"
 export default function Body({ socket }) {
 	const [date, setDate] = useState(new Date().toLocaleDateString("sv-SE"));
 	const { info, loading } = useGetDashboard(socket, date);
+const { openModal, openDrawer } = useOverlay();
 
 	return (
 		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
+{/* <button className="cursor-pointer" onClick={() => openModal("aaaaaaaa")}>Modal</button> */}
+{/* <button className="cursor-pointer" onClick={() => openDrawer("aaaaaaaa")}>Drawer</button> */}
 			<DateSelector date={date} setDate={setDate} />
 			<Metrics loading={loading} info={info} />
 			<Shortcuts />
