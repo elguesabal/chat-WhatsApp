@@ -1,6 +1,6 @@
 import { memo, useMemo } from "react";
 
-import { usePlayerAudio } from "../../../../../utils/hooks/usePlayerAudio.js";
+import { usePlayerAudio } from "../../../../../../utils/hooks/usePlayerAudio.js";
 
 /**
  * @author VAMPETA

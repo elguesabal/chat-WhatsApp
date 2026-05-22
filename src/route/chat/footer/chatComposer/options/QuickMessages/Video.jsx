@@ -1,7 +1,7 @@
 import { memo, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { formattedText } from "../../../../../utils/components/formattedString.jsx";
+import { formattedText } from "../../../../../../utils/components/formattedString.jsx";
 
 /**
  * @author VAMPETA
