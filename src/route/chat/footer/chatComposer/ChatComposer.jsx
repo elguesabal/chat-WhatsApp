@@ -35,7 +35,7 @@ function sendText(socket, phone, message, setMessage, textareaRef) {
 		}
 	};
 	socket.emit("chat:send_message", { phone: phone, message: data }, (res) => {
-		if (res !== 204 && res.error) return (toast.error("Mesagem não enviada"));
+		if (res !== 204 || res.error) return (toast.error("Mesagem não enviada"));
 	});
 	setMessage("");
 	textareaRef.current.style.height = "auto";
