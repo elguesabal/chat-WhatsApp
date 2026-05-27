@@ -36,11 +36,11 @@ export default function Options({ socket }) {
 		<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 p-6 min-h-full">
 			<Option icon="bi-stars" label="IA" onClick={() => openModal(<IA socket={socket} phone={phone} />)} />
 			<Option icon="bi-chat-left-text" label="Texto" onClick={() => openModal(<QuickMessages socket={socket} type="text" phone={phone} />)} />
-			<Option icon="bi-mic" label="Áudio" onClick={() => openModal(<QuickMessages socket={socket} type="audio" />)} phone={phone} />
-			<Option icon="bi-image" label="Imagem" onClick={() => openModal(<QuickMessages socket={socket} type="image" />)} phone={phone} />
-			<Option icon="bi-film" label="Vídeo" onClick={() => openModal(<QuickMessages socket={socket} type="video" />)} phone={phone} />
-			<Option icon="bi-geo-alt" label="Localização" onClick={() => openModal(<QuickMessages socket={socket} type="location" />)} phone={phone} />
-			<Option icon="bi-file-earmark-text" label="Documento" onClick={() => openModal(<QuickMessages socket={socket} type="document" />)} phone={phone} />
+			<Option icon="bi-mic" label="Áudio" onClick={() => openModal(<QuickMessages socket={socket} type="audio" phone={phone} />)} />
+			<Option icon="bi-image" label="Imagem" onClick={() => openModal(<QuickMessages socket={socket} type="image" phone={phone} />)} />
+			<Option icon="bi-film" label="Vídeo" onClick={() => openModal(<QuickMessages socket={socket} type="video" phone={phone} />)} />
+			<Option icon="bi-geo-alt" label="Localização" onClick={() => openModal(<QuickMessages socket={socket} type="location" phone={phone} />)} />
+			<Option icon="bi-file-earmark-text" label="Documento" onClick={() => openModal(<QuickMessages socket={socket} type="document" phone={phone} />)} />
 		</div>
 	);
 }
