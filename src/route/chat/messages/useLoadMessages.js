@@ -16,10 +16,7 @@ export function useLoadMessages(socket, phone) {
 	useEffect(() => {
 		if (!socket) return ;
 		socket.emit("chat:load_messages", { phone: phone }, (res) => {
-			if (!res || res.error) {
-				setError(true);
-				return ;
-			}
+			if (!res || res.code !== 200 || res.error) return (setError(true));
 			setMessages(res.messages);
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;
@@ -29,10 +26,7 @@ export function useLoadMessages(socket, phone) {
 		if (!socket || loadingMore || !hasMore) return ;
 		setLoadingMore(true);
 		socket.emit("chat:load_messages", { phone: phone, beforeId: cursorRef.current }, (res) => {
-			if (!res || res.error || !Array.isArray(res.messages) || res.messages.length === 0) {
-				setLoadingMore(false);
-				return ;
-			}
+			if (!res || res.code !== 200 || res.error || !Array.isArray(res.messages) || res.messages.length === 0) return (setLoadingMore(false));
 			setMessages((prev) => [...res.messages, ...(prev ?? [])]);
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;

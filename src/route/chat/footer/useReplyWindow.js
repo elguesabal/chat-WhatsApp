@@ -13,7 +13,8 @@ export function useReplyWindow(socket) {
 	useEffect(() => {
 		if (!socket) return ;
 		socket.emit("chat:reply_window", { phone: phone }, (res) => {
-			setReplyWindow(res);
+			if (!res || res.code !== 200 || res.error) return (setReplyWindow(false));
+			setReplyWindow(!res.expiration);
 		});
 	}, [socket]);
 	return ({ replyWindow, setReplyWindow });

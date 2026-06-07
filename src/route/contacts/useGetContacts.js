@@ -13,8 +13,8 @@ export function useGetContacts(socket) {
     useEffect(() => {
         if (!socket) return ;
         socket.emit("contacts:load_contacts", null, (res) => {
-            if (!res || res.error) return (setError(true));
-            setContacts(res);
+            if (!res || res.code !== 200 || res.error) return (setError(true));
+            setContacts(res.contacts);
             setLoading(false);
         });
     }, [socket]);
