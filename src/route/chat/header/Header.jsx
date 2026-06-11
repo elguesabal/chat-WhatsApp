@@ -18,7 +18,7 @@ function Drawer({ socket, phone }) {
 	const { contact, setContact, loading } = useGetContact(socket, phone);
 
 	return (
-		<div className="flex flex-col gap-6 p-4">
+		<div className="flex flex-1 flex-col gap-6 p-4">
 			{loading && (
 				<div className="flex items-center justify-center h-full">
 					<div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />

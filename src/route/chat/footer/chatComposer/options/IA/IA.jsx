@@ -47,7 +47,7 @@ function sendText(socket, phone, message, closeOverlay) {
 		}
 	};
 	socket.emit("chat:send_message", { phone: phone, message: data }, (res) => {
-		if (res !== 204 || res.error) return (toast.error("Mesagem não enviada"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Mesagem não enviada"));
 		closeOverlay();
 		toast.success("Resposta enviada!");
 	});

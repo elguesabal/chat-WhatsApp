@@ -10,6 +10,6 @@ import toast from "react-hot-toast";
 export async function sendReadyMessage(socket, phone, message) {
 	if (!phone || !message || !message.type || !message[message.type]) return (toast.error("Mesagem Rápida não enviada"));
 	socket.emit("chat:send_message", { phone: phone, message: message }, (res) => {
-		if (res !== 204 || res.error) return (toast.error("Mesagem Rápida não enviada"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Mesagem Rápida não enviada"));
 	});
 }

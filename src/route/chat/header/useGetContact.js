@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 /**
  * @author VAMPETA
@@ -11,9 +12,9 @@ export function useGetContact(socket, phone) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		if (!socket || !phone) return;
+		if (!socket || !phone) return ;
 		socket.emit("chat:info_contact", { phone: phone }, (res) => {
-			if (!res || res.error) return ;
+			if (!res || res.code !== 200 || res.error) return (toast.error("Erro ao carregar informações do contato"));
 			setContact(res);
 			setLoading(false);
 		});
