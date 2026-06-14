@@ -18,7 +18,7 @@ import { formatDate } from "../../utils/functions/formatDate.js";
 function removeWaitingService(socket, phone, setChats) {
 	if (!socket) return ;
 	socket.emit("human-service:remove_waiting_service", { phone: phone }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao remover contato da lista de espera para atendimento!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao remover contato da lista de espera para atendimento!"));
 		setChats((prev) => prev.filter((chat) => (chat.phone !== phone)));
 		toast.success("Contato removido da lista de espera de atendimento!");
 	});

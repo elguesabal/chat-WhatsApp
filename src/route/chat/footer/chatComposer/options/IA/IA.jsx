@@ -67,8 +67,8 @@ function handleGenerate(socket, phone, input, setThink, setOutput) {
 	setOutput("");
 	socket.emit("chat:response_suggestion", { phone: phone, input: input }, (res) => {
 		setThink(false);
-		if (!res || res.error) return (setOutput("Erro ao gerar sugestão, tente novamente."));
-		setOutput(res);
+		if (!res || res.code !== 200 || res.error) return (setOutput("Erro ao gerar sugestão, tente novamente."));
+		setOutput(res.suggestion);
 	});
 }
 

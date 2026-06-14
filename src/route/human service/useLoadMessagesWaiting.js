@@ -12,8 +12,8 @@ export function useLoadMessagesWaiting(socket) {
 	useEffect(() => {
 		if (!socket) return ;
 		socket.emit("human-service:get_messages_waiting_service", {}, (res) => {
-			if (!res || res.error) return (setError(true));
-			setChats(res);
+			if (!res || res.code !== 200 || res.error) return (setError(true));
+			setChats(res.contacts);
 		});
 	}, [socket]);
 	return ({ chats, setChats, error });
