@@ -15,7 +15,7 @@ export function handleSave(socket, password, newPassword, confirmationPassword) 
 	if (newPassword !== confirmationPassword) return (toast.error("Confirmação de senha diferente da nova senha!"));
 	if (newPassword.length < 5) return (toast.error("A senha precisa ter no mínimo 5 dígitos!"));
 	socket.emit("settings:update_password", { password: password, newPassword: newPassword }, (res) => {
-		if (res !== 204) return (toast.error(res.error));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao modificar a senha!"));
 		toast.success("Senha alterada com sucesso!");
 	});
 }
