@@ -8,13 +8,13 @@ import toast from "react-hot-toast";
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {String} input NOVA MENSAGEM
 */
-export function handleSave(socket, input) {
+function handleSave(socket, input) {
 	const latitude = (input.latitude === "") ? null : parseFloat(input.latitude);
 	const longitude = (input.longitude === "") ? null : parseFloat(input.longitude);
 
 	if (!(input.name && input.address && latitude != null && longitude != null) && !(!input.name && !input.address && latitude == null && longitude == null) ) return ;
 	socket.emit("bot:update_location", { name: input.name, address: input.address, latitude: latitude, longitude: longitude }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
 		toast.success("Salvo com sucesso!");
 	});
 }
