@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 */
 export function handleSave(socket, input) {
 	socket.emit("bot:update_message_new_contact", { message: input }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
 		toast.success("Salvo com sucesso!");
 	});
 }

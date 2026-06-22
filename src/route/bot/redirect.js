@@ -53,7 +53,7 @@ export function removeField(setFields, index) {
 */
 export function handleSaveStatus(socket, status, setStatus) {
 	socket.emit("bot:update_status_redirect", { status: !status }, (res) => {
-		if (res !== 204) return (toast.error(`Erro ao ${(!status) ? "ativar" : "desativar"} o bot!`));
+		if (!res || res.code !== 204 || res.error) return (toast.error(`Erro ao ${(!status) ? "ativar" : "desativar"} o bot!`));
 		setStatus(!status);
 		toast.success(`Bot ${(!status) ? "ativado" : "desativado"} com sucesso!`);
 	});
@@ -69,7 +69,7 @@ export function handleSaveNumbers(socket, fields) {
 	const cleanedFields = fields.map((f) => (f.trim())).filter((f) => (f !== ""));
 
 	socket.emit("bot:update_numbers_redirect", { numbers: cleanedFields }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
 		toast.success("Salvo com sucesso!");
 	});
 }
@@ -82,7 +82,7 @@ export function handleSaveNumbers(socket, fields) {
 */
 export function handleSaveMessage(socket, input) {
 	socket.emit("bot:update_message_redirect", { message: input }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
 		toast.success("Salvo com sucesso!");
 	});
 }

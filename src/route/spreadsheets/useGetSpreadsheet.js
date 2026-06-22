@@ -14,7 +14,7 @@ export function useGetSpreadsheet(socket) {
 
 	useEffect(() => {
 		socket.emit("spreadsheets:get_spreadsheets", {}, (res) => {
-			if (!res || res.error) return (setError(true));
+			if (!res || res.code !== 200 || res.error) return (setError(true));
 			setInfoSpreadsheets(res);
 			setLoading(false);
 		});
@@ -30,11 +30,26 @@ export function useGetSpreadsheet(socket) {
  * @param {Object} setInfoSpreadsheets FUNCAO DE CONTROLE DA VARIAVEL spreadsheets
  * @param {Number} index POSICAO DO COMPONENTE QUE SERA ATUALIZADO
 */
+// export function selectSpreadsheet(socket, infoSpreadsheets, setInfoSpreadsheets, index) {
+// 	const spreadsheet = infoSpreadsheets.pages[index];
+
+// 	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.active ? "add" : "remove"]: spreadsheet.page }, (res) => {
+// 		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
+// 		setInfoSpreadsheets((prev) => {
+// 			return ({
+// 				...prev,
+// 				pages: prev.pages.map((item, i) => ((i === index) ? { ...item, active: !spreadsheet.active } : item))
+// 			});
+// 		});
+// 		toast.success("Salvo com sucesso!");
+// 	});
+// }
 export function selectSpreadsheet(socket, infoSpreadsheets, setInfoSpreadsheets, index) {
 	const spreadsheet = infoSpreadsheets.pages[index];
+	const spreadsheets = infoSpreadsheets.pages.filter((spreadsheet) => (spreadsheet.active)).map((spreadsheet) => (spreadsheet.page));
 
-	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.active ? "add" : "remove"]: spreadsheet.page }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao salvar!"));
+	socket.emit("spreadsheets:update_used_spreadsheets", { spreadsheets: spreadsheets }, (res) => {
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
 		setInfoSpreadsheets((prev) => {
 			return ({
 				...prev,
