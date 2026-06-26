@@ -11,7 +11,7 @@ export default function Messages({ loading, info }) {
 		<>
 			<div>
 				<div className="flex items-center gap-3 mb-4">
-					<h2 className="text-sm md:text-base font-semibold text-zinc-200 whitespace-nowrap">Mensagens recebidas hoje</h2>
+					<h2 className="text-sm md:text-base font-semibold text-zinc-200 whitespace-nowrap">Mensagens recebidas</h2>
 					<div className="flex-1 h-px bg-zinc-800" />
 				</div>
 				<div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -27,7 +27,7 @@ export default function Messages({ loading, info }) {
 			</div>
 			<div>
 				<div className="flex items-center gap-3 mb-4">
-					<h2 className="text-sm md:text-base font-semibold text-zinc-200 whitespace-nowrap">Mensagens enviadas hoje</h2>
+					<h2 className="text-sm md:text-base font-semibold text-zinc-200 whitespace-nowrap">Mensagens enviadas</h2>
 					<div className="flex-1 h-px bg-zinc-800" />
 				</div>
 				<div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

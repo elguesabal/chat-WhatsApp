@@ -16,14 +16,6 @@ export function useGetDashboard(socket, date) {
 		setLoading(true);
 		socket.emit("dashboard:info", { date: date }, (res) => {
 			if (!res || res.code !== 200 || res.error) return (toast.error("Error ao carregar informações"));
-// res.hourly = {
-// 	"1": 100,
-// 	"10": 20,
-// 	"11": 40,
-// 	"12": 50,
-// 	"13": 150,
-// 	"17": 50
-// }
 			setInfo(res);
 			setLoading(false);
 		});
