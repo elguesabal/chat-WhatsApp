@@ -4,6 +4,13 @@ Aplicação web de chat em tempo real construída com **React**, utilizando **Re
 
 ---
 
+![Screenshot da aplicação](./public/screenshot1.png)
+![Screenshot da aplicação](./public/screenshot2.png)
+![Screenshot da aplicação](./public/screenshot3.png)
+![Screenshot da aplicação](./public/screenshot4.png)
+
+---
+
 # 🚀 Tecnologias Utilizadas
 
 * React
